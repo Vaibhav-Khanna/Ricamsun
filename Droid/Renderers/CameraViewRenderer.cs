@@ -8,6 +8,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Plugin.Permissions;
 using WeldingMask.Droid.Renderers;
 using WeldingMask.Renderers;
 using Xamarin.Forms;
@@ -77,12 +78,26 @@ namespace WeldingMask.Droid.Renderers
 
 		public void OnSurfaceTextureAvailable(SurfaceTexture surface, int width, int height)
 		{
-			camera = global::Android.Hardware.Camera.Open((int)cameraType);
-			textureView.LayoutParameters = new FrameLayout.LayoutParams(width, height);
-			surfaceTexture = surface;
+            try
+            {
+                camera = global::Android.Hardware.Camera.Open((int)cameraType);
 
-			camera.SetPreviewTexture(surface);
-			PrepareAndStartCamera();
+                var param = camera.GetParameters();
+
+                param.FocusMode = (Android.Hardware.Camera.Parameters.FocusModeContinuousPicture);
+                param.AutoExposureLock = false;
+                param.WhiteBalance = (Android.Hardware.Camera.Parameters.WhiteBalanceAuto);
+                camera.SetParameters(param);
+
+                textureView.LayoutParameters = new FrameLayout.LayoutParams(width, height);
+                surfaceTexture = surface;
+
+                camera.SetPreviewTexture(surface);
+                PrepareAndStartCamera();
+            }catch(Exception)
+            {
+                CrossPermissions.Current.OpenAppSettings();
+            }
 		}
 
 		public bool OnSurfaceTextureDestroyed(SurfaceTexture surface)

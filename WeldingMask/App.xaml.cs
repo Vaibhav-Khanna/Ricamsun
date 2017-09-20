@@ -1,6 +1,7 @@
 ﻿using Xamarin.Forms;
 using FreshMvvm;
 using WeldingMask.PageModels;
+using Plugin.Permissions;
 
 namespace WeldingMask
 {
@@ -10,7 +11,7 @@ namespace WeldingMask
         {
             InitializeComponent();
 
-            var page = FreshPageModelResolver.ResolvePageModel<CameraPageModel>();
+            var page = FreshPageModelResolver.ResolvePageModel<PermissionsPageModel>();
             var container = new FreshNavigationContainer(page){ BarTextColor = Color.White, BarBackgroundColor = Color.Black };
 
             MainPage = container;
