@@ -128,6 +128,9 @@
     <BundleResource Include="Resources\arrow.png" />
     <BundleResource Include="Resources\arrow%402x.png" />
     <BundleResource Include="Resources\arrow%403x.png" />
+    <BundleResource Include="Resources\check.png" />
+    <BundleResource Include="Resources\check%402x.png" />
+    <BundleResource Include="Resources\check%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
