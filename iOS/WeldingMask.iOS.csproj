@@ -125,6 +125,9 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\uncheck.png" />
+    <BundleResource Include="Resources\arrow.png" />
+    <BundleResource Include="Resources\arrow%402x.png" />
+    <BundleResource Include="Resources\arrow%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />

@@ -74,6 +74,7 @@
                         </Image>
                         <Label Grid.Column="1" Text="Soudure" Style="{StaticResource SectionTitleLabelStyle}">
                         </Label>
+                        <Image Grid.Column="2" Source="arrow.png" Margin="14"></Image>
                     </Grid>
                     <BoxView Grid.Row="3" Style="{StaticResource SeperatorStyle}">
                     </BoxView>
@@ -90,6 +91,7 @@
                         </Image>
                         <Label Grid.Column="1" Text="Eclipse" Style="{StaticResource SectionTitleLabelStyle}">
                         </Label>
+                        <Image Grid.Column="2" Source="arrow.png" Margin="14"></Image>
                     </Grid>
                     <BoxView Grid.Row="5" Style="{StaticResource SeperatorStyle}">
                     </BoxView>
@@ -105,6 +107,7 @@
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Text="CGU" Style="{StaticResource SectionTitleLabelStyle}" Margin="22,0,0,0">
                         </Label>
+                        <Image Grid.Column="1" Source="arrow.png" Margin="15"></Image>
                     </Grid>
                     <BoxView Grid.Row="9" Style="{StaticResource SeperatorStyle}">
                     </BoxView>
