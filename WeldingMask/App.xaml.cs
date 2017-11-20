@@ -11,7 +11,7 @@ namespace WeldingMask
         {
             InitializeComponent();
 
-            var page = FreshPageModelResolver.ResolvePageModel<PermissionsPageModel>();
+            var page = FreshPageModelResolver.ResolvePageModel<DisclaimerPageModel>();
             var container = new FreshNavigationContainer(page){ BarTextColor = Color.White, BarBackgroundColor = Color.Black };
 
             MainPage = container;

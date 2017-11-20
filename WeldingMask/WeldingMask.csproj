@@ -32,6 +32,18 @@
     <EmbeddedResource Include="Pages\CameraPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Pages\DisclaimerPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\ModesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\ModeEclipsePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\ModeSoudurePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -47,6 +59,23 @@
     </Compile>
     <Compile Include="Pages\PermissionsPage.cs" />
     <Compile Include="PageModels\PermissionsPageModel.cs" />
+    <Compile Include="Pages\DisclaimerPage.xaml.cs">
+      <DependentUpon>DisclaimerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageModels\DisclaimerPageModel.cs" />
+    <Compile Include="Pages\ModesPage.xaml.cs">
+      <DependentUpon>ModesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ModeEclipsePage.xaml.cs">
+      <DependentUpon>ModeEclipsePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageModels\ModeEclipsePageModel.cs" />
+    <Compile Include="Custom\CustomSlider.cs" />
+    <Compile Include="Pages\ModeSoudurePage.xaml.cs">
+      <DependentUpon>ModeSoudurePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageModels\ModeSoudurePageModel.cs" />
+    <Compile Include="PageModels\ModesPageModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Renderers\" />
@@ -54,6 +83,7 @@
     <Folder Include="PageModels\" />
     <Folder Include="PageModels\Base\" />
     <Folder Include="Pages\Base\" />
+    <Folder Include="Custom\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

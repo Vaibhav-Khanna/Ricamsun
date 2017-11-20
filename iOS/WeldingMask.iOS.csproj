@@ -134,6 +134,45 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\CameraViewRenderer.cs" />
+    <Compile Include="Renderers\CustomSliderRenderer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\soudure.png" />
+    <BundleResource Include="Resources\soudure%402x.png" />
+    <BundleResource Include="Resources\soudure%403x.png" />
+    <BundleResource Include="Resources\eclipse.png" />
+    <BundleResource Include="Resources\eclipse%402x.png" />
+    <BundleResource Include="Resources\eclipse%403x.png" />
+    <BundleResource Include="Resources\splash.png" />
+    <BundleResource Include="Resources\splash%402x.png" />
+    <BundleResource Include="Resources\splash%403x.png" />
+    <BundleResource Include="Resources\close.png" />
+    <BundleResource Include="Resources\close%402x.png" />
+    <BundleResource Include="Resources\close%403x.png" />
+    <BundleResource Include="Resources\shield.png" />
+    <BundleResource Include="Resources\shield%402x.png" />
+    <BundleResource Include="Resources\shield%403x.png" />
+    <BundleResource Include="Resources\exposure.png" />
+    <BundleResource Include="Resources\exposure%402x.png" />
+    <BundleResource Include="Resources\exposure%403x.png" />
+    <BundleResource Include="Resources\focus.png" />
+    <BundleResource Include="Resources\focus%402x.png" />
+    <BundleResource Include="Resources\focus%403x.png" />
+    <BundleResource Include="Resources\takePhoto.png" />
+    <BundleResource Include="Resources\takePhoto%402x.png" />
+    <BundleResource Include="Resources\takePhoto%403x.png" />
+    <BundleResource Include="Resources\exposureOn.png" />
+    <BundleResource Include="Resources\exposureOn%402x.png" />
+    <BundleResource Include="Resources\exposureOn%403x.png" />
+    <BundleResource Include="Resources\focusOn.png" />
+    <BundleResource Include="Resources\focusOn%402x.png" />
+    <BundleResource Include="Resources\focusOn%403x.png" />
+    <BundleResource Include="Resources\shieldOff.png" />
+    <BundleResource Include="Resources\shieldOff%402x.png" />
+    <BundleResource Include="Resources\shieldOff%403x.png" />
+    <BundleResource Include="Resources\oval.png" />
+    <BundleResource Include="Resources\oval%402x.png" />
+    <BundleResource Include="Resources\oval%403x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.4.270\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.270\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

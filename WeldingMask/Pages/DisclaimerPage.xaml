@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="WeldingMask.Pages.DisclaimerPage">
+	<ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TitleLabelStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="FontFamily" Value="SFUIText-Regular" />
+                <Setter Property="TextColor" Value="#000000" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+
+            <Style x:Key="ContinueLabelStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="FontFamily" Value="SFUIText-Medium" />
+                <Setter Property="TextColor" Value="#ffffff" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+
+            <Style x:Key="TermsLabelStyle" BasedOn="{StaticResource TitleLabelStyle}" TargetType="Label">
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="Margin" Value="0,0,10,0" />
+            </Style>
+
+            <Style x:Key="DetailLabelStyle" BasedOn="{StaticResource TitleLabelStyle}" TargetType="Label">
+                <Setter Property="TextColor" Value="#4a4a4a" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="Margin" Value="15" />
+            </Style>
+            
+            <Style x:Key="SeperatorStyle" TargetType="BoxView">
+                <Setter Property="Color" Value="#e9e9e9" />
+                <Setter Property="HeightRequest" Value="1" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout>
+        <StackLayout.Padding>
+            <OnPlatform x:TypeArguments="Thickness" iOS="0,20,0,0" Android="0" />
+        </StackLayout.Padding>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="39"/>
+                <RowDefinition Height="1"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Text="Disclaimer" Style="{StaticResource TitleLabelStyle}"></Label>
+            <BoxView Grid.Row="1" Style="{StaticResource SeperatorStyle}"></BoxView>
+        </Grid>
+        <ScrollView>
+            <Label Style="{StaticResource DetailLabelStyle}" Text="It is a good idea to think of your PC as an office. It stores files, programs, pictures. This can be compared to an actual office’s files, machines and decorations. The operating system is the boss. With this image in mind, think of an office you’ve visited that was slow and inefficient. There were probably many different reasons for the inefficiency. This is the same with a computer.  There can be many items that slow down your computer. Perhaps the one most commonly overlooked is disorganization and clutter.
+
+Disk Cleanup
+
+An office can accumulate a lot of unnecessary files, machines, and decorations. This is the same with your computer. One of the best ways to keep this clutter under control is to perform a cleaning utility periodically. In Windows this cleaning utility will be called a “disk cleanup.” It removes a variety of unnecessary files depending on the options you have selected.
+
+To perform a disk cleanup on Windows XP you can simply click on “my computer” under the start menu. 
+
+
+reat while. One way to make this run periodically is to make it a scheduled task. This will allow your computer to run it automatically with intervals and time of day determined by you. Yet, you can always run it yourself periodically without creating a scheduled task.
+
+Add or Remove Programs
+
+The information given above can help you get rid of some unnecessary files, but you may also need to clean out some unnecessary programs as well. This can be done using the “add or remove programs” utility in Windows. This is located in the control panel and lists all of your currently installed programs along with an option to uninstall them. It is a good idea to browse through the add or remove programs utility every once in a while just to make sure that all programs are of usefulness. 
+
+If there are programs listed that are no longer used, you can simply highlight the program and click the uninstall button. Windows will than begin the process to uninstall the program. In most cases, to finish uninstalling a program, it is wise to restart your computer. This will dump and files that are held temporarily. 
+
+The add or remove programs utility is very useful, but not all of the programs are listed up front. Programs that come pre-installed on your computer and the Windows operating system can also be uninstalled. For instance, Outlook Express is a default e-mail program that comes with the Windows XP operating system. If you do not use this e-mail program you can uninstall it. Click “add or remove windows components” found in the add or remove programs utility and simply follow the instructions.
+
+Defragment
+
+Many offices contain a large number of files and programs that are valuable and cannot be thrown away. In fact, they may contain files that are not even used, but still have to be retained for some reason. Although these files must remain in the office, they need to be organized. This is why we create file folders that hold groups of files that are related. Than we store them in cabinets that are arranged in alphabetic order.
+
+In a computer, the files that are saved are placed on the hard drive. However, they are placed according to the time that they were saved. So, if you open a word document and save the file as “file A” and than open another document and save it as “file B”, you have a “file A” placed next to “file B.” This is fine, but if you open “file A” later on and save it again, than the added information is saved next to “file B.” 
+
+When files are broken up this way it is referred to as a fragmented file. This means that the computer must find the first part of the file and then find the second part of the file to open that one word document. This can make your computer run slower. However, Windows has created a utility that is meant to rearrange files so that they are no longer fragmented but sit right next to each other.
+
+You can run the disk defragmenter by selecting “all programs” under the start button. Next, select “accessories” and “system tools” and you will see “disk defragmenter.” In fact, this is also an alternative way to select the disk cleanup mentioned earlier. Before starting the defragmenter you can analyze your hard drive to see if Windows recommends performing the defragmenter. It will either say that you should or should not defragment at this time. 
+
+If you need to defragment your computer, simply hit the defragment button. It may take your computer a while to finish this task depending on the speed of your computer and the amount of defragmented files. It could take from about 15-30 minutes or more. However, you can still use the computer while the disk defragmenter is working."></Label>
+        </ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="85*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="1"  Style="{StaticResource TermsLabelStyle}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="J’ai lu et accepte les risques liés au mauvais
+usage de l’application "></Span>
+                        <Span Text="RicamSun" FontAttributes="Bold" FontSize="12"></Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </Grid>
+        <Grid VerticalOptions="EndAndExpand" BackgroundColor="#7ed321">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ContinueCommand}"/>
+            </Grid.GestureRecognizers>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="55"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Text="Valider" Style="{StaticResource ContinueLabelStyle}"></Label>
+        </Grid>
+    </StackLayout>
+</ContentPage>

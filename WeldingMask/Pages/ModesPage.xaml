@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="WeldingMask.Pages.ModesPage" BackgroundColor="Black">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TitleLabelStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="FontFamily" Value="SFUIText-Regular" />
+                <Setter Property="TextColor" Value="#ffffff" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+            <Style x:Key="SectionHeaderLabelStyle" BasedOn="{StaticResource TitleLabelStyle}" TargetType="Label">
+                <Setter Property="TextColor" Value="#4a4a4a" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="Margin" Value="10,13,0,0" />
+            </Style>
+            <Style x:Key="SectionTitleLabelStyle" BasedOn="{StaticResource TitleLabelStyle}" TargetType="Label">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+            </Style>
+            <Style x:Key="SeperatorStyle" TargetType="BoxView">
+                <Setter Property="Color" Value="#323232" />
+                <Setter Property="HeightRequest" Value="1" />
+            </Style>
+            <Style x:Key="CopyRightsStyle" BasedOn="{StaticResource TitleLabelStyle}" TargetType="Label">
+                <Setter Property="FontSize" Value="11" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout>
+        <StackLayout.Padding>
+            <OnPlatform x:TypeArguments="Thickness" iOS="0,20,0,0" Android="0" />
+        </StackLayout.Padding>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="39" />
+                <RowDefinition Height="1" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Text="Modes d’utilisation" Style="{StaticResource TitleLabelStyle}">
+            </Label>
+            <BoxView Grid.Row="1" Style="{StaticResource SeperatorStyle}">
+            </BoxView>
+        </Grid>
+        <ScrollView>
+            <StackLayout>
+                <Grid RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="1" />
+                        <RowDefinition Height="54" />
+                        <RowDefinition Height="1" />
+                        <RowDefinition Height="54" />
+                        <RowDefinition Height="1" />
+                        <RowDefinition Height="15" />
+                        <RowDefinition Height="1" />
+                        <RowDefinition Height="54" />
+                        <RowDefinition Height="1" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Style="{StaticResource SectionHeaderLabelStyle}" Text="MODES D'UTILISATION">
+                    </Label>
+                    <BoxView Grid.Row="1" Style="{StaticResource SeperatorStyle}">
+                    </BoxView>
+                    <Grid Grid.Row="2">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SoudureCommand}" />
+                        </Grid.GestureRecognizers>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="15*" />
+                            <ColumnDefinition Width="75*" />
+                            <ColumnDefinition Width="10*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="soudure.png" Margin="15">
+                        </Image>
+                        <Label Grid.Column="1" Text="Soudure" Style="{StaticResource SectionTitleLabelStyle}">
+                        </Label>
+                    </Grid>
+                    <BoxView Grid.Row="3" Style="{StaticResource SeperatorStyle}">
+                    </BoxView>
+                    <Grid Grid.Row="4">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding EclipseCommand}" />
+                        </Grid.GestureRecognizers>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="15*" />
+                            <ColumnDefinition Width="75*" />
+                            <ColumnDefinition Width="10*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="eclipse.png" Margin="15">
+                        </Image>
+                        <Label Grid.Column="1" Text="Eclipse" Style="{StaticResource SectionTitleLabelStyle}">
+                        </Label>
+                    </Grid>
+                    <BoxView Grid.Row="5" Style="{StaticResource SeperatorStyle}">
+                    </BoxView>
+                    <BoxView Grid.Row="7" Style="{StaticResource SeperatorStyle}">
+                    </BoxView>
+                    <Grid Grid.Row="8">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ContinueCommand}" />
+                        </Grid.GestureRecognizers>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="85*" />
+                            <ColumnDefinition Width="10*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="CGU" Style="{StaticResource SectionTitleLabelStyle}" Margin="22,0,0,0">
+                        </Label>
+                    </Grid>
+                    <BoxView Grid.Row="9" Style="{StaticResource SeperatorStyle}">
+                    </BoxView>
+                </Grid>
+                <Image Source="splash.png">
+                </Image>
+                <Label Text="©2017 RicamSun - Tout droits réservés" Style="{StaticResource CopyRightsStyle}">
+                </Label>
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
+</ContentPage>
