@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:custom="clr-namespace:WeldingMask.Custom;assembly=WeldingMask" x:Class="WeldingMask.Pages.ModeEclipsePage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout x:Name="PageContent" BackgroundColor="Black" Padding="0,10,0,0">
+        <Image x:Name="CloseButton" Style="{StaticResource CloseButton}">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CancelCommand}" />
+            </Image.GestureRecognizers>
+        </Image>
+        <Grid BackgroundColor="Black" HeightRequest="120" VerticalOptions="EndAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="18*" />
+                <ColumnDefinition Width="35*" />
+                <ColumnDefinition Width="18*" />
+                <ColumnDefinition Width="18*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="90" />
+            </Grid.RowDefinitions>
+            <Label Text="-" Grid.Column="0" TextColor="#f8e71c" Grid.Row="0" FontAttributes="Bold" VerticalOptions="Center" FontSize="20" Margin="15,0,0,0">
+            </Label>
+            <custom:CustomSlider Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" Margin="30,0,30,0">
+            </custom:CustomSlider>
+            <Label Text="+" Grid.Column="3" TextColor="#f8e71c" Grid.Row="0" FontAttributes="Bold" VerticalOptions="Center" FontSize="20" Margin="40,0,0,0">
+            </Label>
+            <Image x:Name="ShieldButton" Grid.Column="0" Grid.Row="1" Style="{StaticResource ShieldButtonOn}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Shield_Tapped" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Image x:Name="CaptureButton" Grid.Row="1" Grid.Column="1" Style="{StaticResource CaptureButton}">
+            </Image>
+            <Image x:Name="FocusButton" Grid.Row="1" Grid.Column="2" Style="{StaticResource FocusButtonOff}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Focus_Tapped" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Image x:Name="ExposureButton" Grid.Row="1" Grid.Column="3" Style="{StaticResource ExposureButtonOff}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Exposure_Tapped" />
+                </Image.GestureRecognizers>
+            </Image>
+        </Grid>
+    </StackLayout>
+</ContentPage>
