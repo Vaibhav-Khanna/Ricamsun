@@ -7,6 +7,16 @@ namespace WeldingMask.PageModels
 {
     public class DisclaimerPageModel : BasePageModel
     {
+        private bool _shouldValidate;
+        public bool ShouldValidate
+        {
+            get { return _shouldValidate; }
+            set
+            {
+                _shouldValidate = value;
+                RaisePropertyChanged();
+            }
+        }
         public DisclaimerPageModel()
         {
         }
@@ -16,8 +26,19 @@ namespace WeldingMask.PageModels
             {
                 return new Command(async () =>
                 {
-                    await CoreMethods.PushPageModel<ModesPageModel>(null);
+                    if (ShouldValidate)
+                        await CoreMethods.PushPageModel<ModesPageModel>(null);
                 });
+            }
+        }
+        private bool _termsAccepted;
+        public bool TermsAccepted
+        {
+            get { return _termsAccepted; }
+            set
+            {
+                _termsAccepted = value;
+                RaisePropertyChanged();
             }
         }
     }

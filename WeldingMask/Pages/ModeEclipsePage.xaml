@@ -4,18 +4,18 @@
         <ResourceDictionary>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <StackLayout BackgroundColor="Black" Padding="0,10,0,0">
-        <Image Style="{StaticResource CloseButton}">
+    <StackLayout x:Name="PageContent" BackgroundColor="Black" Padding="0,10,0,0">
+        <Image x:Name="CloseButton" Style="{StaticResource CloseButton}">
             <Image.GestureRecognizers>
                 <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CancelCommand}" />
             </Image.GestureRecognizers>
         </Image>
-        <Grid HeightRequest="120" VerticalOptions="EndAndExpand">
+        <Grid BackgroundColor="Black" HeightRequest="120" VerticalOptions="EndAndExpand">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="15*" />
+                <ColumnDefinition Width="18*" />
                 <ColumnDefinition Width="35*" />
-                <ColumnDefinition Width="15*" />
-                <ColumnDefinition Width="15*" />
+                <ColumnDefinition Width="18*" />
+                <ColumnDefinition Width="18*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />

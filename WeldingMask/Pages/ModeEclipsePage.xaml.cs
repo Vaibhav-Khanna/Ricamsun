@@ -18,11 +18,15 @@ namespace WeldingMask.Pages
 			if ((BindingContext as ModeEclipsePageModel).ShieldOn)
 			{
 				ShieldButton.Style = (Style)Application.Current.Resources["ShieldButtonOff"];
-			}
+                PageContent.BackgroundColor = Color.White;
+                CloseButton.Source = "closeblack.png";
+            }
 			else
 			{
 				ShieldButton.Style = (Style)Application.Current.Resources["ShieldButtonOn"];
-			}
+                PageContent.BackgroundColor = Color.Black;
+                CloseButton.Source = "close.png";
+            }
 			(BindingContext as ModeEclipsePageModel).ShieldOn = !(BindingContext as ModeEclipsePageModel).ShieldOn;
 
 		}
