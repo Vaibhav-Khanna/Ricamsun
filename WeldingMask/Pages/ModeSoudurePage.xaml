@@ -1,36 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="WeldingMask.Pages.ModeSoudurePage">
-	 <StackLayout BackgroundColor="Black" Padding="0,10,0,0">
-        <Image Style="{StaticResource CloseButton}">
-            <Image.GestureRecognizers>
-                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CancelCommand}" />
-            </Image.GestureRecognizers>
-        </Image>
-        <Grid HeightRequest="90" VerticalOptions="EndAndExpand">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="15*" />
-                <ColumnDefinition Width="35*" />
-                <ColumnDefinition Width="15*" />
-                <ColumnDefinition Width="15*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="90" />
-            </Grid.RowDefinitions>
-            <Image x:Name="ShieldButton" Grid.Column="0" Style="{StaticResource ShieldButtonOn}">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="WeldingMask.Pages.ModeSoudurePage"
+             xmlns:rend="clr-namespace:WeldingMask.Renderers;assembly=WeldingMask">
+    <AbsoluteLayout x:Name="container" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <rend:CameraView  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+
+        <StackLayout BackgroundColor="Transparent" Padding="0,10,0,0" AbsoluteLayout.LayoutFlags="All"  AbsoluteLayout.LayoutBounds="0,0,1,1">
+            <Image Style="{StaticResource CloseButton}">
                 <Image.GestureRecognizers>
-                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Shield_Tapped" />
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CancelCommand}" />
                 </Image.GestureRecognizers>
             </Image>
-            <Image x:Name="FocusButton"  Grid.Column="2" Style="{StaticResource FocusButtonOff}">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Focus_Tapped" />
-                </Image.GestureRecognizers>
-            </Image>
-            <Image x:Name="ExposureButton" Grid.Column="3" Style="{StaticResource ExposureButtonOff}">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Exposure_Tapped" />
-                </Image.GestureRecognizers>
-            </Image>
-        </Grid>
-    </StackLayout>
+            <Grid HeightRequest="90" VerticalOptions="EndAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15*" />
+                    <ColumnDefinition Width="35*" />
+                    <ColumnDefinition Width="15*" />
+                    <ColumnDefinition Width="15*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="90" />
+                </Grid.RowDefinitions>
+                <Image x:Name="ShieldButton" Grid.Column="0" Style="{StaticResource ShieldButtonOn}">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Shield_Tapped" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image x:Name="FocusButton"  Grid.Column="2" Style="{StaticResource FocusButtonOff}">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Focus_Tapped" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image x:Name="ExposureButton" Grid.Column="3" Style="{StaticResource ExposureButtonOff}">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Exposure_Tapped" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>
+        </StackLayout>
+    </AbsoluteLayout>
 </ContentPage>

@@ -85,7 +85,7 @@ namespace WeldingMask.Droid.Renderers
                 var param = camera.GetParameters();
 
                 param.FocusMode = (Android.Hardware.Camera.Parameters.FocusModeContinuousPicture);
-                param.AutoExposureLock = false;
+                param.AutoExposureLock = true;
                 param.WhiteBalance = (Android.Hardware.Camera.Parameters.WhiteBalanceAuto);
                 camera.SetParameters(param);
 
