@@ -11,8 +11,9 @@ namespace WeldingMask.Pages
 		{
 			InitializeComponent();
 			NavigationPage.SetHasNavigationBar(this, false);
-		}
 
+        }
+        
 		void Shield_Tapped(object sender, System.EventArgs e)
 		{
 			if ((BindingContext as ModeEclipsePageModel).ShieldOn)
