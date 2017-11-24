@@ -45,7 +45,15 @@ namespace WeldingMask.PageModels
         private async Task<bool> CheckPermissions()
         {
             try
-            {
+            {                
+                var Is_Available = Plugin.Media.CrossMedia.Current.IsCameraAvailable;
+
+                if (!Is_Available)
+                {
+                    await CoreMethods.DisplayAlert("Caméra", "Camera is not available on this device", "OK");
+                    return false;
+                }
+
                 var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
                
                 if (status != PermissionStatus.Granted)

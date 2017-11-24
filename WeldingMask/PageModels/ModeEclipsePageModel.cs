@@ -12,8 +12,55 @@ namespace WeldingMask.PageModels
         
         public ModeEclipsePageModel()
         {
-            ShieldOn = true;
-			FocusOn = false
+            ShieldOn = false;
+        }
+
+        public Command ShieldTap => new Command(() =>
+       {
+            ShieldOn = !ShieldOn;
+       });
+
+        public Command FocusTap => new Command(() =>
+        {
+            FocusOn = !FocusOn;
+        });
+
+        public Command ExposureTap => new Command(() =>
+        {
+            ExposureOn = !ExposureOn;
+        });
+
+        private int focusvalue = 50;
+        public int FocusValue
+        {
+            get { return focusvalue; }
+            set
+            {
+                focusvalue = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private int exposurevalue = 50;
+        public int ExposureValue
+        {
+            get { return exposurevalue; }
+            set
+            {
+                exposurevalue = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private bool enableSlider;
+        public bool EnableSlider
+        {
+            get { return enableSlider; }
+            set
+            {
+                enableSlider = value;
+                RaisePropertyChanged();
+            }
         }
 
         private bool _exposureOn;
@@ -23,6 +70,17 @@ namespace WeldingMask.PageModels
             set
             {
                 _exposureOn = value;
+
+                if (_exposureOn)
+                {
+                    FocusOn = false;
+                    EnableSlider = true;
+                }
+                else
+                {
+                    EnableSlider = false;
+                }
+
                 RaisePropertyChanged();
             }
         }
@@ -34,6 +92,14 @@ namespace WeldingMask.PageModels
             set
             {
                 _shieldOn = value;
+
+                if (!_shieldOn)
+                {
+                    EnableSlider = false;
+                    FocusOn = false;
+                    ExposureOn = false;
+                }
+
                 RaisePropertyChanged();
             }
         }
@@ -45,6 +111,17 @@ namespace WeldingMask.PageModels
             set
             {
                 _focusOn = value;
+
+                if (_focusOn)
+                {
+                    ExposureOn = false;
+                    EnableSlider = true;
+                }
+                else
+                {
+                    EnableSlider = false;
+                }
+
                 RaisePropertyChanged();
             }
         }

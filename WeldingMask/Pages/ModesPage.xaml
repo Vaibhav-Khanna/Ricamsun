@@ -42,8 +42,8 @@
             <BoxView Grid.Row="1" Style="{StaticResource SeperatorStyle}">
             </BoxView>
         </Grid>
-        <ScrollView>
-            <StackLayout>
+        <ScrollView VerticalOptions="FillAndExpand">
+            <StackLayout VerticalOptions="FillAndExpand">
                 <Grid RowSpacing="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="35" />
@@ -112,9 +112,9 @@
                     <BoxView Grid.Row="9" Style="{StaticResource SeperatorStyle}">
                     </BoxView>
                 </Grid>
-                <Image Source="splash.png">
+                <Image Source="splash.png"  VerticalOptions="End">
                 </Image>
-                <Label Text="©2017 RicamSun - Tout droits réservés" Style="{StaticResource CopyRightsStyle}">
+                <Label Text="©2017 RicamSun - Tout droits réservés" VerticalOptions="EndAndExpand" Margin="0,0,0,20" Style="{StaticResource CopyRightsStyle}">
                 </Label>
             </StackLayout>
         </ScrollView>
