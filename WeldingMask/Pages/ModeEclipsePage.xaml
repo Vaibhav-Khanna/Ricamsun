@@ -6,18 +6,18 @@
 
     
     <AbsoluteLayout x:Name="container" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-        <rend:CameraView  AbsoluteLayout.LayoutFlags="All" ExposureEnable="{Binding ExposureOn}" FocusEnable="{Binding FocusOn}" FocusValue="{Binding FocusValue}" ExposureValue="{Binding ExposureValue}" AbsoluteLayout.LayoutBounds="0,0,1,1" >
-             <Image.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped" />
-             </Image.GestureRecognizers>
+        <rend:CameraView  AbsoluteLayout.LayoutFlags="All" ExposureEnable="{Binding ExposureOn}" FocusEnable="{Binding FocusOn}" FocusValue="{Binding FocusValue}" ExposureValue="{Binding ExposureValue}" AbsoluteLayout.LayoutBounds="0,0,1,1" >            
         </rend:CameraView>
 
-        <StackLayout x:Name="PageContent" InputTransparent="true" BackgroundColor="Transparent" Padding="0,0,0,0"  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+        <StackLayout x:Name="PageContent"  BackgroundColor="Transparent" Padding="0,0,0,0"  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
             <Image x:Name="CloseButton" InputTransparent="false" Style="{StaticResource CloseButton}">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CancelCommand}" />
                 </Image.GestureRecognizers>
             </Image>
+             <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped" />
+             </StackLayout.GestureRecognizers>
             <Grid BackgroundColor="Black" Opacity="0.85" InputTransparent="false" Padding="0,20,0,0" VerticalOptions="EndAndExpand">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="18*" />
@@ -29,6 +29,9 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="90" />
                 </Grid.RowDefinitions>
+                 <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped1" />
+                 </Grid.GestureRecognizers>
                 <Label Text="-" IsVisible="{Binding EnableSlider}" Grid.Column="0" TextColor="#f8e71c" Grid.Row="0" FontAttributes="Bold" VerticalOptions="Center" FontSize="20" Margin="15,0,0,0">
                 </Label>
                 <custom:CustomSlider Grid.Column="0" IsVisible="{Binding EnableSlider}" Grid.ColumnSpan="4"  Grid.Row="0" Margin="35,0,35,0">

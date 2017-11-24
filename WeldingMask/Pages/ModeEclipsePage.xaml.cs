@@ -73,5 +73,10 @@ namespace WeldingMask.Pages
                 PageContent.Opacity = 1;
             }
         }
+
+        void Handle_Tapped1(object sender, System.EventArgs e)
+        {
+           
+        }
     }
 }
