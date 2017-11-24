@@ -13,6 +13,7 @@ namespace WeldingMask.iOS.Renderers
         protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Slider> e)
         {
             base.OnElementChanged(e);
+           
             if(Control!=null)
             {
                 Control.SetThumbImage(UIImage.FromFile("oval.png"),UIControlState.Normal);

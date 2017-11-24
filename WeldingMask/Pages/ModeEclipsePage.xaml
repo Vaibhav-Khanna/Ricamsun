@@ -14,7 +14,7 @@
                     <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CancelCommand}" />
                 </Image.GestureRecognizers>
             </Image>
-            <Grid BackgroundColor="Black" HeightRequest="120" VerticalOptions="EndAndExpand">
+            <Grid BackgroundColor="Black" HeightRequest="130" Padding="0,20,0,0" VerticalOptions="EndAndExpand">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="18*" />
                     <ColumnDefinition Width="35*" />
@@ -27,9 +27,9 @@
                 </Grid.RowDefinitions>
                 <Label Text="-" Grid.Column="0" TextColor="#f8e71c" Grid.Row="0" FontAttributes="Bold" VerticalOptions="Center" FontSize="20" Margin="15,0,0,0">
                 </Label>
-                <custom:CustomSlider Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" Margin="30,0,30,0">
+                <custom:CustomSlider Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="0" Margin="35,0,35,0">
                 </custom:CustomSlider>
-                <Label Text="+" Grid.Column="3" TextColor="#f8e71c" Grid.Row="0" FontAttributes="Bold" VerticalOptions="Center" FontSize="20" Margin="40,0,0,0">
+                <Label Text="+" Grid.Column="3" TextColor="#f8e71c" Grid.Row="0" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End" FontSize="20" Margin="0,0,15,0">
                 </Label>
                 <Image x:Name="ShieldButton" Grid.Column="0" Grid.Row="1" Style="{StaticResource ShieldButtonOn}">
                     <Image.GestureRecognizers>

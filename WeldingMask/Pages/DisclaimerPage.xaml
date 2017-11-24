@@ -83,6 +83,9 @@ You can run the disk defragmenter by selecting “all programs” under the star
 If you need to defragment your computer, simply hit the defragment button. It may take your computer a while to finish this task depending on the speed of your computer and the amount of defragmented files. It could take from about 15-30 minutes or more. However, you can still use the computer while the disk defragmenter is working."></Label>
         </ScrollView>
         <Grid>
+             <Grid.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TermsConditions_Tapped" />
+                </Grid.GestureRecognizers>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
@@ -91,9 +94,7 @@ If you need to defragment your computer, simply hit the defragment button. It ma
                 <ColumnDefinition Width="85*"/>
             </Grid.ColumnDefinitions>
             <Image x:Name="TermsConditions" Source="uncheck.png" Margin="10">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TermsConditions_Tapped" />
-                </Image.GestureRecognizers>
+               
             </Image>
             <Label Grid.Column="1"  Style="{StaticResource TermsLabelStyle}">
                 <Label.FormattedText>
@@ -110,9 +111,9 @@ usage de l’application "></Span>
                 <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ContinueCommand}"/>
             </Grid.GestureRecognizers>
             <Grid.RowDefinitions>
-                <RowDefinition Height="55"/>
+                <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Text="Valider" Style="{StaticResource ContinueLabelStyle}"></Label>
+            <Label Grid.Row="0" Text="Valider" Style="{StaticResource ContinueLabelStyle}" FontSize="20" ></Label>
         </Grid>
     </StackLayout>
 </ContentPage>

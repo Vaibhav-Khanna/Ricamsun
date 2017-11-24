@@ -7,14 +7,28 @@ namespace WeldingMask
 {
     public partial class App : Application
     {
+        
         public App()
         {
             InitializeComponent();
 
-            var page = FreshPageModelResolver.ResolvePageModel<DisclaimerPageModel>();
-            var container = new FreshNavigationContainer(page){ BarTextColor = Color.White, BarBackgroundColor = Color.Black };
+
+            Page page;
+            FreshNavigationContainer container;
+
+            if (Current.Properties.ContainsKey("DisclaimerAgree"))
+            {
+                page = FreshPageModelResolver.ResolvePageModel<ModesPageModel>();
+                container = new FreshNavigationContainer(page) { BarTextColor = Color.White, BarBackgroundColor = Color.Black };
+            }
+            else
+            {
+                page = FreshPageModelResolver.ResolvePageModel<DisclaimerPageModel>();
+                container = new FreshNavigationContainer(page) { BarTextColor = Color.Black, BarBackgroundColor = Color.White };
+            }
 
             MainPage = container;
+
         }
 
         protected override void OnStart()
