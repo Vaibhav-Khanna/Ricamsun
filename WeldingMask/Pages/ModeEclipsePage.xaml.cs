@@ -22,12 +22,11 @@ namespace WeldingMask.Pages
 
             context = BindingContext as ModeEclipsePageModel;
 
-            if(context!=null){
-
+            if(context!=null)
+            {
+                context.PropertyChanged -= Context_PropertyChanged;
                 context.PropertyChanged += Context_PropertyChanged;
             }
-            else
-                context.PropertyChanged -= Context_PropertyChanged;
 
         }
 

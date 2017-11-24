@@ -12,7 +12,7 @@ namespace WeldingMask.PageModels
         
         public ModeEclipsePageModel()
         {
-            ShieldOn = false;
+            
         }
 
         public Command ShieldTap => new Command(() =>
@@ -137,5 +137,11 @@ namespace WeldingMask.PageModels
             }
         }
 
+        protected override void ViewIsAppearing(object sender, EventArgs e)
+        {
+            base.ViewIsAppearing(sender, e);
+
+            ShieldOn = false;
+        }
     }
 }
