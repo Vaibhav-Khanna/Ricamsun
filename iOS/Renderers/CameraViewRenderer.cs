@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Foundation;
 using WeldingMask.Pages;
 using WeldingMask.iOS.Renderers;
+using System.Collections.Generic;
 using WeldingMask.Renderers;
 
 [assembly: ExportRenderer(typeof(CameraView), typeof(CameraViewRenderer))]
@@ -19,8 +20,11 @@ namespace WeldingMask.iOS.Renderers
         AVCaptureSession captureSession;
         AVCaptureDeviceInput captureDeviceInput;
         AVCaptureStillImageOutput stillImageOutput;
-       
+        AVCaptureDevice device;
         UIView liveCameraStream;
+        float maxExposure;
+        float minExposure;
+           
 
         protected async override void OnElementChanged(ElementChangedEventArgs<CameraView> e)
         {
@@ -35,32 +39,69 @@ namespace WeldingMask.iOS.Renderers
 			
             SetupLiveCameraStream();
 
+            if (Element.ExposureEnable)
+                AdjustExposure(Element.ExposureValue);
+            else
+                SetAutoExposure();
+
+            if (Element.FocusEnable)
+                AdjustFocus(Element.FocusValue);
+            else
+                SetAutoFocus();
+
+        }
+
+        protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+
+            if (Element == null || Control == null)
+                return;
+
+            if (e.PropertyName == CameraView.FocusValueProperty.PropertyName){
+
+                AdjustFocus(Element.FocusValue);
+            }
+
+            if(e.PropertyName == CameraView.ExposureValueProperty.PropertyName)
+            {
+                AdjustExposure(Element.ExposureValue);
+            }
+
+            if(e.PropertyName == CameraView.ExposureEnableProperty.PropertyName)
+            {
+                if (Element.ExposureEnable)
+                    AdjustExposure(Element.ExposureValue);
+                else
+                    SetAutoExposure();
+            }
+
+            if (e.PropertyName == CameraView.FocusEnableProperty.PropertyName)
+            {
+                if (Element.FocusEnable)
+                    AdjustFocus(Element.FocusValue);
+                else
+                    SetAutoFocus();
+            }
+
         }
 
         private void SetupUserInterface()
         {
-           
-            liveCameraStream = new UIView()
-            {
-               
-            };
-
-           
+            liveCameraStream = new UIView();
             SetNativeControl(liveCameraStream);
-
         }
 
 
-      
         public AVCaptureDevice GetCameraForOrientation(AVCaptureDevicePosition orientation)
         {
             var devices = AVCaptureDevice.DevicesWithMediaType(AVMediaType.Video);
 
-            foreach (var device in devices)
+            foreach (var devi in devices)
             {
-                if (device.Position == orientation)
+                if (devi.Position == orientation)
                 {
-                    return device;
+                    return devi;
                 }
             }
             return null;
@@ -85,6 +126,9 @@ namespace WeldingMask.iOS.Renderers
             liveCameraStream.Layer.AddSublayer(videoPreviewLayer);
 
             var captureDevice = AVCaptureDevice.GetDefaultDevice(AVMediaType.Video);
+            device = captureDevice;
+            maxExposure = device.MaxExposureTargetBias;
+            minExposure = device.MinExposureTargetBias;
             ConfigureCameraForDevice(captureDevice);
             captureDeviceInput = AVCaptureDeviceInput.FromDevice(captureDevice);
 
@@ -99,54 +143,7 @@ namespace WeldingMask.iOS.Renderers
             captureSession.AddInput(captureDeviceInput);
             captureSession.StartRunning();
         }
-
-        public void ToggleFrontBackCamera()
-        {
-            var devicePosition = captureDeviceInput.Device.Position;
-            if (devicePosition == AVCaptureDevicePosition.Front)
-            {
-                devicePosition = AVCaptureDevicePosition.Back;
-            }
-            else
-            {
-                devicePosition = AVCaptureDevicePosition.Front;
-            }
-
-            var device = GetCameraForOrientation(devicePosition);
-            ConfigureCameraForDevice(device);
-
-            captureSession.BeginConfiguration();
-            captureSession.RemoveInput(captureDeviceInput);
-            captureDeviceInput = AVCaptureDeviceInput.FromDevice(device);
-            captureSession.AddInput(captureDeviceInput);
-            captureSession.CommitConfiguration();
-        }
-
-        //public void ToggleFlash()
-        //{
-        //    var device = captureDeviceInput.Device;
-
-        //    var error = new NSError();
-        //    if (device.HasFlash)
-        //    {
-        //        if (device.FlashMode == AVCaptureFlashMode.On)
-        //        {
-        //            device.LockForConfiguration(out error);
-        //            device.FlashMode = AVCaptureFlashMode.Off;
-        //            device.UnlockForConfiguration();
-
-        //            toggleFlashButton.SetBackgroundImage(UIImage.FromFile("NoFlashButton.png"), UIControlState.Normal);
-        //        }
-        //        else
-        //        {
-        //            device.LockForConfiguration(out error);
-        //            device.FlashMode = AVCaptureFlashMode.On;
-        //            device.UnlockForConfiguration();
-
-        //            toggleFlashButton.SetBackgroundImage(UIImage.FromFile("FlashButton.png"), UIControlState.Normal);
-        //        }
-        //    }
-        //}
+     
 
         public void ConfigureCameraForDevice(AVCaptureDevice device)
         {
@@ -164,16 +161,75 @@ namespace WeldingMask.iOS.Renderers
                 device.ExposureMode = AVCaptureExposureMode.ContinuousAutoExposure;
                 device.UnlockForConfiguration();
             }
-            if (device.IsWhiteBalanceModeSupported(AVCaptureWhiteBalanceMode.ContinuousAutoWhiteBalance))
+           	 
+            AdjustExposure(50);
+        }
+
+
+        public void SetAutoFocus()
+        {
+            var error = new NSError();
+
+            if (device.IsFocusModeSupported(AVCaptureFocusMode.ContinuousAutoFocus))
             {
                 device.LockForConfiguration(out error);
-                device.WhiteBalanceMode = AVCaptureWhiteBalanceMode.ContinuousAutoWhiteBalance;
+                device.FocusMode = AVCaptureFocusMode.ContinuousAutoFocus;
+                device.UnlockForConfiguration();
+            }
+        }
+
+        public void SetAutoExposure()
+        {            
+            var error = new NSError();
+
+            if (device.IsExposureModeSupported(AVCaptureExposureMode.ContinuousAutoExposure))
+            {
+                device.LockForConfiguration(out error);
+                device.ExposureMode = AVCaptureExposureMode.ContinuousAutoExposure;
                 device.UnlockForConfiguration();
             }
 
-			
-           
+            AdjustExposure(50);
         }
+
+
+        public async void AdjustFocus(int F)
+        {
+            if (F < 0 || F > 100)
+                return;
+
+            var error = new NSError();
+
+            if (device.LockingFocusWithCustomLensPositionSupported)
+            {
+                device.LockForConfiguration(out error);
+                await device.SetFocusModeLockedAsync((float)F/100);
+                device.UnlockForConfiguration();
+            }
+        }
+
+
+        public async void AdjustExposure(int E)
+        {
+            if (E < 0 || E > 100)
+                return;
+            
+            var error = new NSError();
+
+            float range = Math.Abs(maxExposure - minExposure);
+
+            float factor = ((float)E / 100);
+
+            var targetExposure = factor * range  + minExposure;
+
+            if (device.LockingFocusWithCustomLensPositionSupported)
+            {
+                device.LockForConfiguration(out error);
+                await device.SetExposureTargetBiasAsync((targetExposure));
+                device.UnlockForConfiguration();
+            }
+        }
+
 
         public async Task AuthorizeCameraUse()
         {
@@ -182,38 +238,16 @@ namespace WeldingMask.iOS.Renderers
             if (authorizationStatus != AVAuthorizationStatus.Authorized)
             {
                 await AVCaptureDevice.RequestAccessForMediaTypeAsync(AVMediaType.Video);
-            }else
+            }
+            else
             {
                 await Task.Delay(1000);
             }
         }
-
-
        
-        public void SendPhoto(byte[] image)
+        public async void SendPhoto(byte[] image)
         {
-            //var navigationPage = new NavigationPage(new OutputImagePage(image))
-            //{
-                
-            //};
-
-            //await App.Current.MainPage.Navigation.PushModalAsync(navigationPage, false);
-        }
-
-    }
-
-    internal class UIPaintCodeButton : UIButton
-    {
-        Action<CGRect> _drawing;
-        public UIPaintCodeButton(Action<CGRect> drawing)
-        {
-            _drawing = drawing;
-        }
-
-        public override void Draw(CGRect rect)
-        {
-            base.Draw(rect);
-            _drawing(rect);
+            var photo = await CapturePhoto();
         }
 
     }

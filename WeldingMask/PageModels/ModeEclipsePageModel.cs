@@ -10,10 +10,6 @@ namespace WeldingMask.PageModels
     public class ModeEclipsePageModel : BasePageModel
     {
         
-        public ModeEclipsePageModel()
-        {
-            
-        }
 
         public Command ShieldTap => new Command(() =>
        {
@@ -29,6 +25,29 @@ namespace WeldingMask.PageModels
         {
             ExposureOn = !ExposureOn;
         });
+
+
+        private int slidervalue;
+        public int SliderValue
+        {
+            get { return slidervalue; }
+            set
+            {
+                slidervalue = value;
+
+                if (FocusOn)
+                {
+                    FocusValue = slidervalue;
+                }
+                else if(ExposureOn)
+                {
+                    ExposureValue = slidervalue;
+                }
+
+                RaisePropertyChanged();
+            }
+        }
+
 
         private int focusvalue = 50;
         public int FocusValue
@@ -75,6 +94,7 @@ namespace WeldingMask.PageModels
                 {
                     FocusOn = false;
                     EnableSlider = true;
+                    SliderValue = ExposureValue;
                 }
                 else
                 {
@@ -116,6 +136,7 @@ namespace WeldingMask.PageModels
                 {
                     ExposureOn = false;
                     EnableSlider = true;
+                    SliderValue = FocusValue;
                 }
                 else
                 {
