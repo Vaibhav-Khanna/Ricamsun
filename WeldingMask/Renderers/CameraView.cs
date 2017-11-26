@@ -35,5 +35,12 @@ namespace WeldingMask.Renderers
             set { SetValue(ExposureValueProperty, value); }
         }
 
+        //public static readonly BindableProperty CapturePhotoCommandProperty = BindableProperty.Create("CapturePhotoCommand", typeof(Command), typeof(CameraView), null );
+        //public Command CapturePhotoCommand
+        //{
+        //    get { return (Command)GetValue(ExposureValueProperty); }
+        //    set { SetValue(ExposureValueProperty, value); }
+        //}
+
     }
 }

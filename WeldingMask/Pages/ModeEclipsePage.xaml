@@ -50,19 +50,22 @@
                     </BoxView.GestureRecognizers>
                 </BoxView>
                 <Image x:Name="CaptureButton" Grid.Row="1" Grid.Column="1" Style="{StaticResource CaptureButton}">
+                    <Image.GestureRecognizers>
+                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding TakePhoto}" />
+                    </Image.GestureRecognizers>
                 </Image>
-                <Image x:Name="FocusButton" IsEnabled="{Binding ShieldOn}" Grid.Row="1" Grid.Column="2" Style="{StaticResource FocusButtonOff}">
+                <Image x:Name="FocusButton"  Grid.Row="1" Grid.Column="2" Style="{StaticResource FocusButtonOff}">
                   
                 </Image>
-                  <BoxView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Row="1" Grid.Column="2" BackgroundColor="Transparent" >
+                  <BoxView HorizontalOptions="FillAndExpand" IsEnabled="{Binding ShieldOn}" VerticalOptions="FillAndExpand" Grid.Row="1" Grid.Column="2" BackgroundColor="Transparent" >
                      <BoxView.GestureRecognizers>
                          <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding FocusTap}" />
                     </BoxView.GestureRecognizers>
                 </BoxView>
-                <Image x:Name="ExposureButton" IsEnabled="{Binding ShieldOn}" Grid.Row="1" Grid.Column="3" Style="{StaticResource ExposureButtonOff}">
+                <Image x:Name="ExposureButton" Grid.Row="1" Grid.Column="3" Style="{StaticResource ExposureButtonOff}">
                   
                 </Image>
-                  <BoxView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Row="1" Grid.Column="3" BackgroundColor="Transparent" >
+                  <BoxView HorizontalOptions="FillAndExpand" IsEnabled="{Binding ShieldOn}" VerticalOptions="FillAndExpand" Grid.Row="1" Grid.Column="3" BackgroundColor="Transparent" >
                      <BoxView.GestureRecognizers>
                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ExposureTap}" />
                     </BoxView.GestureRecognizers>
@@ -70,4 +73,5 @@
             </Grid>
         </StackLayout>
     </AbsoluteLayout>
+    
 </ContentPage>
