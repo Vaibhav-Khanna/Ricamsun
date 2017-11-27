@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using WeldingMask.Renderers;
 using Photos;
 using PhotosUI;
+using MaterialControls;
 
 [assembly: ExportRenderer(typeof(CameraView), typeof(CameraViewRenderer))]
 namespace WeldingMask.iOS.Renderers
@@ -119,8 +120,7 @@ namespace WeldingMask.iOS.Renderers
 
 
         public async Task CapturePhoto()
-        {
-            
+        {           
             var videoConnection = stillImageOutput.ConnectionFromMediaType(AVMediaType.Video);
             var sampleBuffer = await stillImageOutput.CaptureStillImageTaskAsync(videoConnection);
 
@@ -132,6 +132,8 @@ namespace WeldingMask.iOS.Renderers
            
             image.SaveToPhotosAlbum(null);
 
+            var toast = new MDToast("Une photo est disponible dans votre bibliothèque", 2);
+            toast.Show();
         }
 
         public void SetupLiveCameraStream()

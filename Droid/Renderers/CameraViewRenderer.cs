@@ -30,7 +30,7 @@ namespace WeldingMask.Droid.Renderers
      */
     public class CameraViewRenderer : ViewRenderer<CameraView,Android.Views.View>, TextureView.ISurfaceTextureListener,ICameraViewRenderer
 	{
-        //global::Android.Hardware.Camera camera;	
+        
 
         private static readonly SparseIntArray ORIENTATIONS = new SparseIntArray();
         public static readonly int REQUEST_CAMERA_PERMISSION = 1;
@@ -87,7 +87,7 @@ namespace WeldingMask.Droid.Renderers
 
         Activity activity;
 		CameraFacing cameraType;
-		TextureView textureView;
+        AutoFitTextureView textureView;
 		SurfaceTexture surfaceTexture;
 		global::Android.Views.View view;
 
@@ -109,7 +109,7 @@ namespace WeldingMask.Droid.Renderers
                 view = activity.LayoutInflater.Inflate(Resource.Layout.CameraLayout, this, false);
 				cameraType = CameraFacing.Back;
 
-                textureView = view.FindViewById<TextureView>(Resource.Id.textureView);
+                textureView = view.FindViewById<AutoFitTextureView>(Resource.Id.textureView);
 				textureView.SurfaceTextureListener = this;
                 				
                 SetNativeControl(view);
