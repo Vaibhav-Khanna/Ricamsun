@@ -30,7 +30,7 @@ namespace WeldingMask.Pages
                 context.PropertyChanged -= Context_PropertyChanged;
                 context.PropertyChanged += Context_PropertyChanged;
             }
-
+           
         }
 
         void Context_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -69,11 +69,13 @@ namespace WeldingMask.Pages
             {
                 PageContent.BackgroundColor = Color.White;
                 PageContent.Opacity = 0.9;
+                controls.IsVisible = false;
             }
             else
             {
                 PageContent.BackgroundColor = Color.Transparent;
                 PageContent.Opacity = 1;
+                controls.IsVisible = true;
             }
         }
 

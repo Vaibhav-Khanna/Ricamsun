@@ -66,11 +66,13 @@ namespace WeldingMask.Pages
             {
                 PageContent.BackgroundColor = Color.White;
                 PageContent.Opacity = 0.9;
+                controls.IsVisible = false;
             }
             else
             {
                 PageContent.BackgroundColor = Color.Transparent;
                 PageContent.Opacity = 1;
+                controls.IsVisible = true;
             }
         }
 

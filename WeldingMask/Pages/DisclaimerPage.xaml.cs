@@ -17,6 +17,8 @@ namespace WeldingMask.Pages
 
         private void TermsConditions_Tapped(object sender, EventArgs e)
         {
+            (BindingContext as DisclaimerPageModel).TermsAccepted = !(BindingContext as DisclaimerPageModel).TermsAccepted;
+
             if((BindingContext as DisclaimerPageModel).TermsAccepted)
             {
                 TermsConditions.Source = "check.png";
@@ -29,8 +31,6 @@ namespace WeldingMask.Pages
                 Validate.BackgroundColor = Color.FromHex(_grey);
                 (BindingContext as DisclaimerPageModel).ShouldValidate = false;
             }
-            (BindingContext as DisclaimerPageModel).TermsAccepted = !(BindingContext as DisclaimerPageModel).TermsAccepted;
-
         }
     }
 }
