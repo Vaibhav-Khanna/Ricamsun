@@ -96,6 +96,7 @@ namespace WeldingMask.Droid.Renderers
 			}
 		}
 
+
 		protected override void OnLayout(bool changed, int l, int t, int r, int b)
 		{
 			base.OnLayout(changed, l, t, r, b);
@@ -106,6 +107,7 @@ namespace WeldingMask.Droid.Renderers
 			view.Measure(msw, msh);
 			view.Layout(0, 0, r - l, b - t);
 		}
+
 
 		public void OnSurfaceTextureAvailable(SurfaceTexture texture, int width, int height)
 		{
@@ -165,9 +167,10 @@ namespace WeldingMask.Droid.Renderers
             }
             catch(System.Exception e)
             {
-                CrossPermissions.Current.OpenAppSettings();
+                //CrossPermissions.Current.OpenAppSettings();
             }
 		}
+
 
 		public bool OnSurfaceTextureDestroyed(SurfaceTexture surface)
 		{
@@ -175,8 +178,6 @@ namespace WeldingMask.Droid.Renderers
             // camera.Release();
 
             CloseCamera();
-
-
             return true;
 		}
 

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using WeldingMask.PageModels;
 using Xamarin.Forms;
 
@@ -77,6 +80,11 @@ namespace WeldingMask.Pages
         void Handle_Tapped1(object sender, System.EventArgs e)
         {
            
+        }
+
+        void TakePhoto(object sender, System.EventArgs e)
+        {
+            cameraView.TakePhoto();
         }
     }
 }

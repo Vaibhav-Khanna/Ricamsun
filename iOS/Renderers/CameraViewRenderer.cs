@@ -10,6 +10,8 @@ using WeldingMask.Pages;
 using WeldingMask.iOS.Renderers;
 using System.Collections.Generic;
 using WeldingMask.Renderers;
+using Photos;
+using PhotosUI;
 
 [assembly: ExportRenderer(typeof(CameraView), typeof(CameraViewRenderer))]
 namespace WeldingMask.iOS.Renderers
@@ -39,6 +41,9 @@ namespace WeldingMask.iOS.Renderers
 			
             SetupLiveCameraStream();
 
+            Element.CapturePhoto -= Element_CapturePhoto;
+            Element.CapturePhoto += Element_CapturePhoto;
+
             if (Element.ExposureEnable)
                 AdjustExposure(Element.ExposureValue);
             else
@@ -49,6 +54,11 @@ namespace WeldingMask.iOS.Renderers
             else
                 SetAutoFocus();
 
+        }
+
+        async void Element_CapturePhoto()
+        {
+            await CapturePhoto();
         }
 
         protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -107,12 +117,21 @@ namespace WeldingMask.iOS.Renderers
             return null;
         }
 
-        public async Task<NSData> CapturePhoto()
+
+        public async Task CapturePhoto()
         {
+            
             var videoConnection = stillImageOutput.ConnectionFromMediaType(AVMediaType.Video);
             var sampleBuffer = await stillImageOutput.CaptureStillImageTaskAsync(videoConnection);
+
+   
             var jpegImageAsNsData = AVCaptureStillImageOutput.JpegStillToNSData(sampleBuffer);
-            return jpegImageAsNsData;
+
+
+            var image = new UIImage(jpegImageAsNsData);
+           
+            image.SaveToPhotosAlbum(null);
+
         }
 
         public void SetupLiveCameraStream()
@@ -245,11 +264,7 @@ namespace WeldingMask.iOS.Renderers
             }
         }
        
-        public async void SendPhoto(byte[] image)
-        {
-            var photo = await CapturePhoto();
-        }
-
+      
     }
 
 }
