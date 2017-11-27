@@ -150,6 +150,8 @@
     <Compile Include="Listeners\ImageAvailableListener.cs" />
     <Compile Include="AutoFitTextureView.cs" />
     <Compile Include="CompareSizesByArea.cs" />
+    <Compile Include="SplashActivity.cs" />
+    <Compile Include="Renderers\CustomSliderRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -166,6 +168,9 @@
     <AndroidResource Include="Resources\drawable-xhdpi\icon.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
     <AndroidResource Include="Resources\layout\CameraLayout.axml" />
+    <AndroidResource Include="Resources\drawable\splash.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\Icon.png" />
+    <AndroidResource Include="Resources\drawable\splashscreen.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\check.png" />
