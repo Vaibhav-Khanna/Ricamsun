@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.matsiya.WeldingMask">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.0.1" package="com.matsiya.RicamSun" android:installLocation="auto" android:versionCode="0000010">
 	<uses-sdk android:minSdkVersion="21" />
 	<uses-permission android:name="android.permission.CAMERA" />
-	<application android:label="WeldingMask"></application>
+	<application android:label="RicamSun"></application>
 </manifest>

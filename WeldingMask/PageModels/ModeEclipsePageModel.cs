@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
+using System;
 using System.Windows.Input;
 using WeldingMask.PageModels.Base;
 using Xamarin.Forms;
@@ -7,10 +9,77 @@ namespace WeldingMask.PageModels
 {
     public class ModeEclipsePageModel : BasePageModel
     {
-        public ModeEclipsePageModel()
+        
+
+        public Command ShieldTap => new Command(() =>
+       {
+            ShieldOn = !ShieldOn;
+       });
+
+        public Command FocusTap => new Command(() =>
         {
-            ShieldOn = true;
-			FocusOn = false;
+            FocusOn = !FocusOn;
+        });
+
+        public Command ExposureTap => new Command(() =>
+        {
+            ExposureOn = !ExposureOn;
+        });
+
+
+        private int slidervalue;
+        public int SliderValue
+        {
+            get { return slidervalue; }
+            set
+            {
+                slidervalue = value;
+
+                if (FocusOn)
+                {
+                    FocusValue = slidervalue;
+                }
+                else if(ExposureOn)
+                {
+                    ExposureValue = slidervalue;
+                }
+
+                RaisePropertyChanged();
+            }
+        }
+
+
+        private int focusvalue = 50;
+        public int FocusValue
+        {
+            get { return focusvalue; }
+            set
+            {
+                focusvalue = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private int exposurevalue = 50;
+        public int ExposureValue
+        {
+            get { return exposurevalue; }
+            set
+            {
+                exposurevalue = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private bool enableSlider;
+        public bool EnableSlider
+        {
+            get { return enableSlider; }
+            set
+            {
+                enableSlider = value;
+                RaisePropertyChanged();
+            }
         }
 
         private bool _exposureOn;
@@ -20,6 +89,18 @@ namespace WeldingMask.PageModels
             set
             {
                 _exposureOn = value;
+
+                if (_exposureOn)
+                {
+                    FocusOn = false;
+                    EnableSlider = true;
+                    SliderValue = ExposureValue;
+                }
+                else
+                {
+                    EnableSlider = false;
+                }
+
                 RaisePropertyChanged();
             }
         }
@@ -31,6 +112,14 @@ namespace WeldingMask.PageModels
             set
             {
                 _shieldOn = value;
+
+                if (!_shieldOn)
+                {
+                    EnableSlider = false;
+                    FocusOn = false;
+                    ExposureOn = false;
+                }
+
                 RaisePropertyChanged();
             }
         }
@@ -42,6 +131,18 @@ namespace WeldingMask.PageModels
             set
             {
                 _focusOn = value;
+
+                if (_focusOn)
+                {
+                    ExposureOn = false;
+                    EnableSlider = true;
+                    SliderValue = FocusValue;
+                }
+                else
+                {
+                    EnableSlider = false;
+                }
+
                 RaisePropertyChanged();
             }
         }
@@ -55,6 +156,13 @@ namespace WeldingMask.PageModels
                     await CoreMethods.PopPageModel();
                 });
             }
+        }
+
+        protected override void ViewIsAppearing(object sender, EventArgs e)
+        {
+            base.ViewIsAppearing(sender, e);
+
+            ShieldOn = false;
         }
     }
 }

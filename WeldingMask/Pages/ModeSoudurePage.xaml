@@ -1,36 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="WeldingMask.Pages.ModeSoudurePage">
-	 <StackLayout BackgroundColor="Black" Padding="0,10,0,0">
-        <Image Style="{StaticResource CloseButton}">
-            <Image.GestureRecognizers>
-                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CancelCommand}" />
-            </Image.GestureRecognizers>
-        </Image>
-        <Grid HeightRequest="90" VerticalOptions="EndAndExpand">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="15*" />
-                <ColumnDefinition Width="35*" />
-                <ColumnDefinition Width="15*" />
-                <ColumnDefinition Width="15*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="90" />
-            </Grid.RowDefinitions>
-            <Image x:Name="ShieldButton" Grid.Column="0" Style="{StaticResource ShieldButtonOn}">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Shield_Tapped" />
-                </Image.GestureRecognizers>
-            </Image>
-            <Image x:Name="FocusButton"  Grid.Column="2" Style="{StaticResource FocusButtonOff}">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Focus_Tapped" />
-                </Image.GestureRecognizers>
-            </Image>
-            <Image x:Name="ExposureButton" Grid.Column="3" Style="{StaticResource ExposureButtonOff}">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Exposure_Tapped" />
-                </Image.GestureRecognizers>
-            </Image>
-        </Grid>
-    </StackLayout>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="WeldingMask.Pages.ModeSoudurePage"
+     xmlns:custom="clr-namespace:WeldingMask.Custom;assembly=WeldingMask"
+             xmlns:rend="clr-namespace:WeldingMask.Renderers;assembly=WeldingMask">
+
+    <AbsoluteLayout x:Name="container" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <rend:CameraView  AbsoluteLayout.LayoutFlags="All" ExposureEnable="{Binding ShieldOn}" FocusEnable="{Binding ShieldOn}" FocusValue="{Binding FocusValue}" ExposureValue="{Binding ExposureValue}" AbsoluteLayout.LayoutBounds="0,0,1,1" >            
+        </rend:CameraView>
+
+        <StackLayout x:Name="PageContent"  BackgroundColor="Transparent" Padding="0,0,0,0"  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+
+            <ContentView  InputTransparent="false" VerticalOptions="Start" Margin="0,10,0,0" HorizontalOptions="Start" Padding="10" >
+                <Image x:Name="CloseButton" InputTransparent="true" Style="{StaticResource CloseButton}" VerticalOptions="Start" HorizontalOptions="Start"/>
+                 <ContentView.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CancelCommand}" />
+                </ContentView.GestureRecognizers>
+            </ContentView>
+
+            
+             <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped" />
+             </StackLayout.GestureRecognizers>
+            <Grid BackgroundColor="Black" Opacity="0.85" InputTransparent="false" Padding="0,20,0,0" VerticalOptions="EndAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="18*" />
+                    <ColumnDefinition Width="35*" />
+                    <ColumnDefinition Width="18*" />
+                    <ColumnDefinition Width="18*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="70" />
+                </Grid.RowDefinitions>
+                 <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped1" />
+                 </Grid.GestureRecognizers>
+                <Label Text="-" IsVisible="{Binding EnableSlider}" Grid.Column="0" TextColor="#f8e71c" Grid.Row="0" FontAttributes="Bold" VerticalOptions="Center" FontSize="20" Margin="15,0,0,0">
+                </Label>
+                <custom:CustomSlider Grid.Column="0" Maximum="100" Minimum="0" Value="{Binding SliderValue,Mode=TwoWay}" IsVisible="{Binding EnableSlider}" Grid.ColumnSpan="4"  Grid.Row="0" Margin="35,0,35,0">
+                </custom:CustomSlider>
+                <Label Text="+" IsVisible="{Binding EnableSlider}" Grid.Column="3" TextColor="#f8e71c" Grid.Row="0" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End" FontSize="20" Margin="0,0,15,0">
+                </Label>
+                <Image x:Name="ShieldButton" Grid.Column="0" Grid.Row="1" Style="{StaticResource ShieldButtonOn}">
+                </Image>
+                <BoxView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Column="0" Grid.Row="1" BackgroundColor="Transparent" >
+                     <BoxView.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ShieldTap}"/>
+                    </BoxView.GestureRecognizers>
+                </BoxView>
+              
+                <Image x:Name="FocusButton"  Grid.Row="1" Grid.Column="2" Style="{StaticResource FocusButtonOff}">
+                  
+                </Image>
+                  <BoxView HorizontalOptions="FillAndExpand" IsEnabled="{Binding ShieldOn}" VerticalOptions="FillAndExpand" Grid.Row="1" Grid.Column="2" BackgroundColor="Transparent" >
+                     <BoxView.GestureRecognizers>
+                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding FocusTap}" />
+                    </BoxView.GestureRecognizers>
+                </BoxView>
+                <Image x:Name="ExposureButton" Grid.Row="1" Grid.Column="3" Style="{StaticResource ExposureButtonOff}">
+                  
+                </Image>
+                  <BoxView HorizontalOptions="FillAndExpand" IsEnabled="{Binding ShieldOn}" VerticalOptions="FillAndExpand" Grid.Row="1" Grid.Column="3" BackgroundColor="Transparent" >
+                     <BoxView.GestureRecognizers>
+                       <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ExposureTap}" />
+                    </BoxView.GestureRecognizers>
+                </BoxView>
+            </Grid>
+        </StackLayout>
+    </AbsoluteLayout>
+    
 </ContentPage>

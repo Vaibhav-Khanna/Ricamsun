@@ -7,48 +7,77 @@ namespace WeldingMask.Pages
 {
     public partial class ModeSoudurePage : ContentPage
     {
+      
+        private ModeSoudurePageModel context;
+
         public ModeSoudurePage()
         {
-            InitializeComponent();NavigationPage.SetHasNavigationBar(this, false);
+            NavigationPage.SetHasNavigationBar(this, false);
+            InitializeComponent();
         }
 
-        void Shield_Tapped(object sender, System.EventArgs e)
+        protected override void OnBindingContextChanged()
         {
-            if ((BindingContext as ModeSoudurePageModel).ShieldOn)
+            base.OnBindingContextChanged();
+
+            context = BindingContext as ModeSoudurePageModel;
+
+            if (context != null)
             {
-                ShieldButton.Style = (Style)Application.Current.Resources["ShieldButtonOff"];
+                context.PropertyChanged -= Context_PropertyChanged;
+                context.PropertyChanged += Context_PropertyChanged;
+            }
+
+        }
+
+        void Context_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (context == null)
+                return;
+
+            if (e.PropertyName == "ShieldOn")
+            {
+                if (context.ShieldOn)
+                    ShieldButton.Style = (Style)Application.Current.Resources["ShieldButtonOn"];
+                else
+                    ShieldButton.Style = (Style)Application.Current.Resources["ShieldButtonOff"];
+            }
+            if (e.PropertyName == "FocusOn")
+            {
+                if (context.FocusOn)
+                    FocusButton.Style = (Style)Application.Current.Resources["FocusButtonOn"];
+                else
+                    FocusButton.Style = (Style)Application.Current.Resources["FocusButtonOff"];
+            }
+
+            if (e.PropertyName == "ExposureOn")
+            {
+                if (context.ExposureOn)
+                    ExposureButton.Style = (Style)Application.Current.Resources["ExposureButtonOn"];
+                else
+                    ExposureButton.Style = (Style)Application.Current.Resources["ExposureButtonOff"];
+            }
+        }
+
+
+        void Handle_Tapped(object sender, System.EventArgs e)
+        {
+            if (PageContent.BackgroundColor == Color.Transparent)
+            {
+                PageContent.BackgroundColor = Color.White;
+                PageContent.Opacity = 0.9;
             }
             else
             {
-                ShieldButton.Style = (Style)Application.Current.Resources["ShieldButtonOn"];
+                PageContent.BackgroundColor = Color.Transparent;
+                PageContent.Opacity = 1;
             }
-            (BindingContext as ModeSoudurePageModel).ShieldOn = !(BindingContext as ModeSoudurePageModel).ShieldOn;
-
-        }
-        void Focus_Tapped(object sender, System.EventArgs e)
-        {
-            if ((BindingContext as ModeSoudurePageModel).FocusOn)
-            {
-                FocusButton.Style = (Style)Application.Current.Resources["FocusButtonOff"];
-            }
-            else
-            {
-                FocusButton.Style = (Style)Application.Current.Resources["FocusButtonOn"];
-            }
-            (BindingContext as ModeSoudurePageModel).FocusOn = !(BindingContext as ModeSoudurePageModel).FocusOn;
         }
 
-        void Exposure_Tapped(object sender, System.EventArgs e)
+        void Handle_Tapped1(object sender, System.EventArgs e)
         {
-            if ((BindingContext as ModeSoudurePageModel).ExposureOn)
-            {
-                ExposureButton.Style = (Style)Application.Current.Resources["ExposureButtonOff"];
-            }
-            else
-            {
-                ExposureButton.Style = (Style)Application.Current.Resources["ExposureButtonOn"];
-            }
-            (BindingContext as ModeSoudurePageModel).ExposureOn = !(BindingContext as ModeSoudurePageModel).ExposureOn;
+
         }
+       
     }
 }
