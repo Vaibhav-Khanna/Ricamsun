@@ -6,7 +6,7 @@
 
     
     <AbsoluteLayout x:Name="container" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-        <rend:CameraView  AbsoluteLayout.LayoutFlags="All" ExposureEnable="{Binding ShieldOn}" FocusEnable="{Binding ShieldOn}" FocusValue="{Binding FocusValue}" ExposureValue="{Binding ExposureValue}" AbsoluteLayout.LayoutBounds="0,0,1,1" >            
+        <rend:CameraView x:Name="cameraView" AbsoluteLayout.LayoutFlags="All" ExposureEnable="{Binding ShieldOn}" FocusEnable="{Binding ShieldOn}" FocusValue="{Binding FocusValue}" ExposureValue="{Binding ExposureValue}" AbsoluteLayout.LayoutBounds="0,0,1,1" >            
         </rend:CameraView>
 
         <StackLayout x:Name="PageContent"  BackgroundColor="Transparent" Padding="0,0,0,0"  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
@@ -22,7 +22,7 @@
              <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped" />
              </StackLayout.GestureRecognizers>
-            <Grid BackgroundColor="Black" Opacity="0.85" InputTransparent="false" Padding="0,20,0,0" VerticalOptions="EndAndExpand">
+            <Grid x:Name="controls" BackgroundColor="Black" Opacity="0.85" InputTransparent="false" Padding="0,20,0,0" VerticalOptions="EndAndExpand">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="18*" />
                     <ColumnDefinition Width="35*" />
@@ -51,7 +51,7 @@
                 </BoxView>
                 <Image x:Name="CaptureButton" Grid.Row="1" Grid.Column="1" Style="{StaticResource CaptureButton}">
                     <Image.GestureRecognizers>
-                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding TakePhoto}" />
+                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TakePhoto" />
                     </Image.GestureRecognizers>
                 </Image>
                 <Image x:Name="FocusButton"  Grid.Row="1" Grid.Column="2" Style="{StaticResource FocusButtonOff}">

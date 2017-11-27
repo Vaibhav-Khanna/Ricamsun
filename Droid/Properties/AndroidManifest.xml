@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.0.1" package="com.matsiya.RicamSun" android:installLocation="auto" android:versionCode="0000010">
-	<uses-sdk android:minSdkVersion="21" />
+	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="25" />
 	<uses-permission android:name="android.permission.CAMERA" />
 	<application android:label="RicamSun"></application>
 </manifest>

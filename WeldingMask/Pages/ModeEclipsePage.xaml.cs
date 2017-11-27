@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using WeldingMask.PageModels;
 using Xamarin.Forms;
 
@@ -27,7 +30,7 @@ namespace WeldingMask.Pages
                 context.PropertyChanged -= Context_PropertyChanged;
                 context.PropertyChanged += Context_PropertyChanged;
             }
-
+           
         }
 
         void Context_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -66,17 +69,24 @@ namespace WeldingMask.Pages
             {
                 PageContent.BackgroundColor = Color.White;
                 PageContent.Opacity = 0.9;
+                controls.IsVisible = false;
             }
             else
             {
                 PageContent.BackgroundColor = Color.Transparent;
                 PageContent.Opacity = 1;
+                controls.IsVisible = true;
             }
         }
 
         void Handle_Tapped1(object sender, System.EventArgs e)
         {
            
+        }
+
+        void TakePhoto(object sender, System.EventArgs e)
+        {
+            cameraView.TakePhoto();
         }
     }
 }

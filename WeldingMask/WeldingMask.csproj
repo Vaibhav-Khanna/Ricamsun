@@ -57,7 +57,6 @@
     <Compile Include="Pages\CameraPage.xaml.cs">
       <DependentUpon>CameraPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\PermissionsPage.cs" />
     <Compile Include="PageModels\PermissionsPageModel.cs" />
     <Compile Include="Pages\DisclaimerPage.xaml.cs">
       <DependentUpon>DisclaimerPage.xaml</DependentUpon>

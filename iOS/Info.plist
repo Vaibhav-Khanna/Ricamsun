@@ -47,5 +47,7 @@
 	<false/>
 	<key>CFBundleName</key>
 	<string>RicamSun</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This is needed to store the images taken in the eclipse mode to the photo gallery.</string>
 </dict>
 </plist>

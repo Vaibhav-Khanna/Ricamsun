@@ -13,7 +13,7 @@
                 <Setter Property="TextColor" Value="#4a4a4a" />
                 <Setter Property="FontSize" Value="12" />
                 <Setter Property="HorizontalOptions" Value="Start" />
-                <Setter Property="Margin" Value="10,13,0,0" />
+                <Setter Property="Margin" Value="10,1,0,0" />
             </Style>
             <Style x:Key="SectionTitleLabelStyle" BasedOn="{StaticResource TitleLabelStyle}" TargetType="Label">
                 <Setter Property="FontSize" Value="14" />
@@ -29,10 +29,11 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <StackLayout>
-        <StackLayout.Padding>
-            <OnPlatform x:TypeArguments="Thickness" iOS="0,20,0,0" Android="0" />
-        </StackLayout.Padding>
-        <Grid>
+             
+        <Grid BackgroundColor="#181818" RowSpacing="0">
+              <Grid.Padding>
+                  <OnPlatform x:TypeArguments="Thickness" iOS="0,20,0,0" Android="0" />           
+             </Grid.Padding>
             <Grid.RowDefinitions>
                 <RowDefinition Height="39" />
                 <RowDefinition Height="1" />
@@ -57,11 +58,11 @@
                         <RowDefinition Height="54" />
                         <RowDefinition Height="1" />
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Style="{StaticResource SectionHeaderLabelStyle}" Margin="10,0,0,3" Text="MODES D'UTILISATION">
+                    <Label Grid.Row="0" Style="{StaticResource SectionHeaderLabelStyle}" VerticalOptions="End" Margin="10,0,0,3" Text="MODES D'UTILISATION">
                     </Label>
                     <BoxView Grid.Row="1" Style="{StaticResource SeperatorStyle}">
                     </BoxView>
-                    <Grid Grid.Row="2">
+                    <Grid Grid.Row="2" BackgroundColor="#181818">
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SoudureCommand}" />
                         </Grid.GestureRecognizers>
@@ -78,7 +79,7 @@
                     </Grid>
                     <BoxView Grid.Row="3" Style="{StaticResource SeperatorStyle}">
                     </BoxView>
-                    <Grid Grid.Row="4">
+                    <Grid Grid.Row="4" BackgroundColor="#181818">
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding EclipseCommand}" />
                         </Grid.GestureRecognizers>
@@ -97,7 +98,7 @@
                     </BoxView>
                     <BoxView Grid.Row="7" Style="{StaticResource SeperatorStyle}">
                     </BoxView>
-                    <Grid Grid.Row="8">
+                    <Grid Grid.Row="8" BackgroundColor="#181818" >
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ContinueCommand}" />
                         </Grid.GestureRecognizers>

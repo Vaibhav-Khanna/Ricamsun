@@ -2,6 +2,7 @@
 using FreshMvvm;
 using WeldingMask.PageModels;
 using Plugin.Permissions;
+using System;
 
 namespace WeldingMask
 {
@@ -30,6 +31,8 @@ namespace WeldingMask
             MainPage = container;
 
         }
+
+     
 
         protected override void OnStart()
         {

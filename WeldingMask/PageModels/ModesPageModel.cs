@@ -20,7 +20,7 @@ namespace WeldingMask.PageModels
             {
                 return new Command(async () =>
                 {
-                    var result = await CheckPermissions();
+                    var result = await CheckPermissionCamera();
 
                     if(result)
                     await CoreMethods.PushPageModel<ModeSoudurePageModel>(null);
@@ -34,15 +34,16 @@ namespace WeldingMask.PageModels
             {
                 return new Command(async () =>
                 {
-                    var result = await CheckPermissions();
+                    var result_C = await CheckPermissionCamera();
+                    var result_P = await CheckPermissionPhoto();
 
-                    if (result)
+                    if (result_C && result_P)
                     await CoreMethods.PushPageModel<ModeEclipsePageModel>(null);
                 });
             }
         }
 
-        private async Task<bool> CheckPermissions()
+        private async Task<bool> CheckPermissionCamera()
         {
             try
             {                
@@ -84,7 +85,47 @@ namespace WeldingMask.PageModels
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        private async Task<bool> CheckPermissionPhoto()
+        {
+            try
+            {
+                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Photos);
+
+                if (status != PermissionStatus.Granted)
+                {
+                    if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Photos))
+                    {
+                        await CoreMethods.DisplayAlert("Accès à la photos", "L'application nécessite l'accès à la photos", "OK");
+                    }
+
+                    var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Photos);
+                    //Best practice to always check that the key exists
+                    if (results.ContainsKey(Permission.Photos))
+                        status = results[Permission.Photos];
+                }
+
+                if (status == PermissionStatus.Granted)
+                {
+                    return true;
+                }
+                else
+                {
+                    var result = await CoreMethods.DisplayAlert("Accès à la photos", "Vous avez refusé l'accès à la photos. Nous ne pouvons continuer.", "Settings", "Maybe Later");
+
+                    if (result)
+                        Plugin.Permissions.CrossPermissions.Current.OpenAppSettings();
+
+                    return false;
+                }
+
+            }
+            catch (Exception)
             {
                 return false;
             }
