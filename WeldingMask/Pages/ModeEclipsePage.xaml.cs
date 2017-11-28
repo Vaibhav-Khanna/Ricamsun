@@ -40,10 +40,16 @@ namespace WeldingMask.Pages
 
             if(e.PropertyName == "ShieldOn")
             {
-                if(context.ShieldOn)
-                ShieldButton.Style = (Style)Application.Current.Resources["ShieldButtonOn"];
+                if (context.ShieldOn)
+                {
+                    ShieldButton.Style = (Style)Application.Current.Resources["ShieldButtonOn"];
+                   
+                }
                 else
-                ShieldButton.Style = (Style)Application.Current.Resources["ShieldButtonOff"];
+                {
+                    ShieldButton.Style = (Style)Application.Current.Resources["ShieldButtonOff"];
+
+                }
             }
             if(e.PropertyName =="FocusOn")
             {
