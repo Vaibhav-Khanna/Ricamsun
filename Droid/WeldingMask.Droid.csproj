@@ -170,7 +170,11 @@
     <AndroidResource Include="Resources\layout\CameraLayout.axml" />
     <AndroidResource Include="Resources\drawable\splash.png" />
     <AndroidResource Include="Resources\drawable-mdpi\Icon.png" />
-    <AndroidResource Include="Resources\drawable\splashscreen.png" />
+    <AndroidResource Include="Resources\drawable\splashscreen.axml" />
+    <AndroidResource Include="Resources\drawable-hdpi\spla.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\spla.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\spla.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\spla.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\check.png" />
