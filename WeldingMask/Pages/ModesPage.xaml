@@ -73,7 +73,7 @@
                         </Grid.ColumnDefinitions>
                         <Image Grid.Column="0" Source="soudure.png" Margin="15">
                         </Image>
-                        <Label Grid.Column="1" Text="Soudure" Style="{StaticResource SectionTitleLabelStyle}">
+                        <Label Grid.Column="1" Text="Soudure / Welding" Style="{StaticResource SectionTitleLabelStyle}">
                         </Label>
                         <Image Grid.Column="2" Source="arrow.png" Margin="14"></Image>
                     </Grid>
