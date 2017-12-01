@@ -18,5 +18,12 @@ namespace WeldingMask.iOS
 
             return base.FinishedLaunching(app, options);
         }
+
+        [Export("application:supportedInterfaceOrientationsForWindow:")]
+        public UIInterfaceOrientationMask GetSupportedInterfaceOrientations(UIApplication application, IntPtr forWindow)
+        {
+            return Plugin.DeviceOrientation.DeviceOrientationImplementation.SupportedInterfaceOrientations;
+        }
+
     }
 }

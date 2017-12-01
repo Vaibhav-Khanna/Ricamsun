@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Plugin.DeviceOrientation;
+using Plugin.DeviceOrientation.Abstractions;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using WeldingMask.PageModels;
@@ -14,10 +16,10 @@ namespace WeldingMask.Pages
         private ModeEclipsePageModel context;
 
 		public ModeEclipsePage()
-		{
+		{         
             NavigationPage.SetHasNavigationBar(this, false);
 			InitializeComponent();	
-        }
+        }       
 
         protected override void OnBindingContextChanged()
         {
@@ -31,13 +33,7 @@ namespace WeldingMask.Pages
                 context.PropertyChanged += Context_PropertyChanged;
             }
            
-        }
-
-        protected override void OnSizeAllocated(double width, double height)
-        {
-            base.OnSizeAllocated(width, height);
-        }
-
+        } 
 
         void Context_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {

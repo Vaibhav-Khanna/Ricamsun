@@ -9,7 +9,7 @@
         <rend:CameraView x:Name="cameraView" AbsoluteLayout.LayoutFlags="All" ExposureEnable="{Binding ShieldOn}" FocusEnable="{Binding ShieldOn}" FocusValue="{Binding FocusValue}" ExposureValue="{Binding ExposureValue}" AbsoluteLayout.LayoutBounds="0,0,1,1" >            
         </rend:CameraView>
 
-        <StackLayout x:Name="PageContent"  BackgroundColor="Transparent" Padding="0,0,0,0"  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+        <StackLayout x:Name="PageContent" Orientation="Vertical"  BackgroundColor="Transparent" Padding="0,0,0,0"  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
 
             <ContentView  InputTransparent="false" VerticalOptions="Start" Margin="0,10,0,0" HorizontalOptions="Start" Padding="10" >
                 <Image x:Name="CloseButton" InputTransparent="true" Style="{StaticResource CloseButton}" VerticalOptions="Start" HorizontalOptions="Start"/>
