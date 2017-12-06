@@ -6,9 +6,9 @@ namespace WeldingMask.Droid.Listeners
 {
     public class CameraCaptureSessionCallback : CameraCaptureSession.StateCallback
     {
-        public CameraViewRenderer Owner { get; set; }
+        public Camera2BasicFragment Owner { get; set; }
 
-        public CameraCaptureSessionCallback(CameraViewRenderer owner)
+        public CameraCaptureSessionCallback(Camera2BasicFragment owner)
         {
             Owner = owner;
         }
@@ -37,10 +37,8 @@ namespace WeldingMask.Droid.Listeners
 
                 // Finally, we start displaying the camera preview.
                 Owner.mPreviewRequest = Owner.mPreviewRequestBuilder.Build();
-
-                //TODO
-                //Owner.mCaptureSession.SetRepeatingRequest(Owner.mPreviewRequest,
-                        //Owner.mCaptureCallback, Owner.mBackgroundHandler);
+                Owner.mCaptureSession.SetRepeatingRequest(Owner.mPreviewRequest,
+                        Owner.mCaptureCallback, Owner.mBackgroundHandler);
             }
             catch (CameraAccessException e)
             {

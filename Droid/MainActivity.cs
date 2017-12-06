@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using Plugin.Permissions;
 using Plugin.CurrentActivity;
+using WeldingMask.Droid.Renderers;
 
 namespace WeldingMask.Droid
 {
@@ -18,8 +19,6 @@ namespace WeldingMask.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-
-            CrossCurrentActivity.Current.Activity = this;
 
             base.OnCreate(bundle);
 

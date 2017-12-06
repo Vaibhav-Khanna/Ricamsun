@@ -8,9 +8,9 @@ namespace WeldingMask.Droid.Listeners
     {
         private static readonly string TAG = "CameraCaptureStillPictureSessionCallback";
 
-        public CameraViewRenderer Owner { get; set; }
+        public Camera2BasicFragment Owner { get; set; }
 
-        public CameraCaptureStillPictureSessionCallback(CameraViewRenderer owner)
+        public CameraCaptureStillPictureSessionCallback(Camera2BasicFragment owner)
         {
             Owner = owner;
         }
@@ -18,7 +18,7 @@ namespace WeldingMask.Droid.Listeners
         public override void OnCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result)
         {
             Owner.ShowToast("Saved: " + Owner.mFile);
-
+          
             Owner.UnlockFocus();
         }
     }

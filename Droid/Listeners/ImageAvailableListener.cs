@@ -10,8 +10,7 @@ namespace WeldingMask.Droid.Listeners
     public class ImageAvailableListener : Java.Lang.Object, ImageReader.IOnImageAvailableListener
     {
         public File File { get; set; }
-        public CameraViewRenderer Owner { get; set; }
-      
+        public Camera2BasicFragment Owner { get; set; }
         public void OnImageAvailable(ImageReader reader)
         {
             Owner.mBackgroundHandler.Post(new ImageSaver(reader.AcquireNextImage(), File));

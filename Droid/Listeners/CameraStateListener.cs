@@ -7,37 +7,35 @@ namespace WeldingMask.Droid.Listeners
 {
     public class CameraStateListener : CameraDevice.StateCallback
     {
-        public CameraViewRenderer owner;
-
-        public override void OnOpened(CameraDevice camera)
+        public Camera2BasicFragment owner;
+        public override void OnOpened(CameraDevice cameraDevice)
         {
             // This method is called when the camera is opened.  We start camera preview here.
             owner.mCameraOpenCloseLock.Release();
-            owner.mCameraDevice = camera;
+            owner.mCameraDevice = cameraDevice;
             owner.CreateCameraPreviewSession();
         }
 
-        public override void OnDisconnected(CameraDevice camera)
+        public override void OnDisconnected(CameraDevice cameraDevice)
         {
             owner.mCameraOpenCloseLock.Release();
-            camera.Close();
+            cameraDevice.Close();
             owner.mCameraDevice = null;
         }
 
-        public override void OnError(CameraDevice camera, CameraError error)
+        public override void OnError(CameraDevice cameraDevice, CameraError error)
         {
             owner.mCameraOpenCloseLock.Release();
-            camera.Close();
+            cameraDevice.Close();
             owner.mCameraDevice = null;
             if (owner == null)
                 return;
-
-            Activity activity = Plugin.CurrentActivity.CrossCurrentActivity.Current.Activity;
-
-            if (activity != null)
-            {
-                activity.Finish();
-            }
+          
+            //Activity activity = owner.Activity;
+            //if (activity != null)
+            //{
+            //    activity.Finish();
+            //}
 
         }
     }
