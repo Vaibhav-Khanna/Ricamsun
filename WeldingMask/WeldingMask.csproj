@@ -29,9 +29,6 @@
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.xaml" />
-    <EmbeddedResource Include="Pages\CameraPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Include="Pages\DisclaimerPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -54,9 +51,6 @@
     <Compile Include="Pages\Base\BasePage.cs" />
     <Compile Include="PageModels\CameraPageModel.cs" />
     <Compile Include="Renderers\CameraView.cs" />
-    <Compile Include="Pages\CameraPage.xaml.cs">
-      <DependentUpon>CameraPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="PageModels\PermissionsPageModel.cs" />
     <Compile Include="Pages\DisclaimerPage.xaml.cs">
       <DependentUpon>DisclaimerPage.xaml</DependentUpon>
@@ -104,6 +98,15 @@
     </Reference>
     <Reference Include="Plugin.Media">
       <HintPath>..\packages\Xam.Plugin.Media.3.0.1\lib\netstandard1.0\Plugin.Media.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\netstandard1.1\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.DeviceOrientation.Abstractions">
+      <HintPath>..\packages\Plugin.DeviceOrientation.1.0.5\lib\netstandard1.0\Plugin.DeviceOrientation.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.DeviceOrientation">
+      <HintPath>..\packages\Plugin.DeviceOrientation.1.0.5\lib\netstandard1.0\Plugin.DeviceOrientation.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

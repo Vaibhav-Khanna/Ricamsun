@@ -15,11 +15,13 @@ namespace WeldingMask.PageModels
 
         public Command FocusTap => new Command(() =>
         {
+            if (ShieldOn)
             FocusOn = !FocusOn;
         });
 
         public Command ExposureTap => new Command(() =>
         {
+            if (ShieldOn)
             ExposureOn = !ExposureOn;
         });
 

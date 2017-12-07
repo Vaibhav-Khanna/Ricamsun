@@ -18,11 +18,13 @@ namespace WeldingMask.PageModels
 
         public Command FocusTap => new Command(() =>
         {
+            if(ShieldOn)
             FocusOn = !FocusOn;
         });
 
         public Command ExposureTap => new Command(() =>
         {
+            if (ShieldOn)
             ExposureOn = !ExposureOn;
         });
 
@@ -112,6 +114,7 @@ namespace WeldingMask.PageModels
             set
             {
                 _shieldOn = value;
+                RaisePropertyChanged();
 
                 if (!_shieldOn)
                 {
@@ -119,8 +122,6 @@ namespace WeldingMask.PageModels
                     FocusOn = false;
                     ExposureOn = false;
                 }
-
-                RaisePropertyChanged();
             }
         }
 
@@ -162,7 +163,9 @@ namespace WeldingMask.PageModels
         {
             base.ViewIsAppearing(sender, e);
 
-            ShieldOn = false;
+            ShieldOn = false; 
         }
+
+
     }
 }

@@ -1,15 +1,17 @@
 ﻿using System;
 using Android.Views;
 using WeldingMask.Droid.Abstractions;
+using WeldingMask.Droid.Renderers;
 
 namespace WeldingMask.Droid.Listeners
 {
-    
+
+
     public class Camera2BasicSurfaceTextureListener : Java.Lang.Object, TextureView.ISurfaceTextureListener
     {
-        public ICameraViewRenderer Owner { get; set; }
+        public Camera2BasicFragment Owner { get; set; }
 
-        public Camera2BasicSurfaceTextureListener(ICameraViewRenderer owner)
+        public Camera2BasicSurfaceTextureListener(Camera2BasicFragment owner)
         {
             Owner = owner;
         }
@@ -33,5 +35,7 @@ namespace WeldingMask.Droid.Listeners
         {
 
         }
+
     }
+
 }

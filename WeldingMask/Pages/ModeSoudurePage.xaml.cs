@@ -14,6 +14,11 @@ namespace WeldingMask.Pages
         {
             NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
+
+            if (Device.RuntimePlatform == Device.Android)
+            {
+                controls.Opacity = 1;
+            }
         }
 
         protected override void OnBindingContextChanged()
@@ -38,24 +43,50 @@ namespace WeldingMask.Pages
             if (e.PropertyName == "ShieldOn")
             {
                 if (context.ShieldOn)
+                {
                     ShieldButton.Style = (Style)Application.Current.Resources["ShieldButtonOn"];
+                    ShieldLabel.Text = "Stop";
+                    ExposureLabel.Opacity = 1;
+                    FocusLabel.Opacity = 1;
+                    ExposureButton.Opacity = 1;
+                    FocusButton.Opacity = 1;
+                }
                 else
+                {
                     ShieldButton.Style = (Style)Application.Current.Resources["ShieldButtonOff"];
+                    ShieldLabel.Text = "Start";
+                    ExposureLabel.Opacity = 0.3;
+                    FocusLabel.Opacity = 0.3;
+                    ExposureButton.Opacity = 0.3;
+                    FocusButton.Opacity = 0.3;
+                }
             }
             if (e.PropertyName == "FocusOn")
             {
                 if (context.FocusOn)
+                {
                     FocusButton.Style = (Style)Application.Current.Resources["FocusButtonOn"];
+                    FocusLabel.Style = (Style)Application.Current.Resources["LabelOn"];
+                }
                 else
+                {
                     FocusButton.Style = (Style)Application.Current.Resources["FocusButtonOff"];
+                    FocusLabel.Style = (Style)Application.Current.Resources["LabelOff"];
+                }
             }
 
             if (e.PropertyName == "ExposureOn")
             {
                 if (context.ExposureOn)
+                {
                     ExposureButton.Style = (Style)Application.Current.Resources["ExposureButtonOn"];
+                    ExposureLabel.Style = (Style)Application.Current.Resources["LabelOn"];
+                }
                 else
+                {
                     ExposureButton.Style = (Style)Application.Current.Resources["ExposureButtonOff"];
+                    ExposureLabel.Style = (Style)Application.Current.Resources["LabelOff"];
+                }
             }
         }
 

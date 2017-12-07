@@ -20,27 +20,51 @@
             </Style>
             <Style x:Key="ExposureButtonOff" TargetType="Image">
                 <Setter Property="Source" Value="exposure.png" />
-                <Setter Property="Margin" Value="0,0,13,0" />
-                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+               
             </Style>
             <Style x:Key="ExposureButtonOn" TargetType="Image">
                 <Setter Property="Source" Value="exposureOn.png" />
-                <Setter Property="Margin" Value="0,0,13,0" />
-                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+               
             </Style>
             <Style x:Key="FocusButtonOff" TargetType="Image">
                 <Setter Property="Source" Value="focus.png" />
-                <Setter Property="Margin" Value="0,0,13,0" />
-                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+               
             </Style>
 			 <Style x:Key="FocusButtonOn" TargetType="Image">
                 <Setter Property="Source" Value="focusOn.png" />
-                <Setter Property="Margin" Value="0,0,13,0" />
-                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+               
             </Style>
             <Style x:Key="CaptureButton" TargetType="Image">
                 <Setter Property="Source" Value="takePhoto.png" />
                 <Setter Property="HorizontalOptions" Value="End" />
+            </Style>
+             <Style x:Key="ShieldLabel" TargetType="Label">
+                <Setter Property="FontSize" Value="10" />
+                <Setter Property="TextColor" Value="#FFFFFF" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+            </Style>
+             <Style x:Key="LabelOn" TargetType="Label">
+                <Setter Property="FontSize" Value="10" />
+                <Setter Property="TextColor" Value="#F7E53C" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+            </Style>
+             <Style x:Key="LabelOff" TargetType="Label">
+                <Setter Property="FontSize" Value="10" />
+                <Setter Property="TextColor" Value="#FFFFFF" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+            </Style>
+             <Style x:Key="LabelDisable" TargetType="Label">
+                <Setter Property="FontSize" Value="10" />
+                <Setter Property="TextColor" Value="#80FFFFFF" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
             </Style>
         </ResourceDictionary>
 	</Application.Resources>

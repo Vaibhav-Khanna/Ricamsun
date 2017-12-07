@@ -23,11 +23,13 @@ namespace WeldingMask.iOS.Renderers
         AVCaptureSession captureSession;
         AVCaptureDeviceInput captureDeviceInput;
         AVCaptureStillImageOutput stillImageOutput;
+        AVCaptureVideoPreviewLayer videoPreviewLayer;
         AVCaptureDevice device;
         UIView liveCameraStream;
         float maxExposure;
         float minExposure;
-           
+        double width;
+        double height;
 
         protected async override void OnElementChanged(ElementChangedEventArgs<CameraView> e)
         {
@@ -62,6 +64,7 @@ namespace WeldingMask.iOS.Renderers
             await CapturePhoto();
         }
 
+
         protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
@@ -69,6 +72,7 @@ namespace WeldingMask.iOS.Renderers
             if (Element == null || Control == null)
                 return;
 
+          
             if (e.PropertyName == CameraView.FocusValueProperty.PropertyName){
 
                 AdjustFocus(Element.FocusValue);
@@ -94,6 +98,7 @@ namespace WeldingMask.iOS.Renderers
                 else
                     SetAutoFocus();
             }
+             
 
         }
 
@@ -140,7 +145,7 @@ namespace WeldingMask.iOS.Renderers
         {
             captureSession = new AVCaptureSession();
 
-            var videoPreviewLayer = new AVCaptureVideoPreviewLayer(captureSession)
+            videoPreviewLayer = new AVCaptureVideoPreviewLayer(captureSession)
             {
                 Frame = liveCameraStream.Bounds
             };
