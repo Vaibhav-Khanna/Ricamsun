@@ -22,6 +22,7 @@ using Java.Util.Concurrent;
 using Boolean = Java.Lang.Boolean;
 using Math = Java.Lang.Math;
 using Orientation = Android.Content.Res.Orientation;
+using System.Linq;
 
 namespace WeldingMask.Droid.Renderers
 {
@@ -110,6 +111,18 @@ namespace WeldingMask.Droid.Renderers
         // Orientation of the camera sensor
         private int mSensorOrientation;
 
+        float? minimumLens = null;
+
+        float[] availableFocalLenths = null;
+
+        Range AERangeCompensation;
+
+        Range CameraExposureRange;
+
+        Range ExposureTime;
+
+        long FrameDuration;
+
         // A {@link CameraCaptureSession.CaptureCallback} that handles events related to JPEG capture.
         public CameraCaptureListener mCaptureCallback;
 
@@ -152,19 +165,23 @@ namespace WeldingMask.Droid.Renderers
             for (var i = 0; i < choices.Length; i++)
             {
                 Size option = choices[i];
-                if ((option.Width <= maxWidth) && (option.Height <= maxHeight) &&
-                       option.Height == option.Width * h / w)
-                {
-                    if (option.Width >= textureViewWidth &&
-                        option.Height >= textureViewHeight)
-                    {
-                        bigEnough.Add(option);
-                    }
-                    else
-                    {
-                        notBigEnough.Add(option);
-                    }
-                }
+
+                if (option.Width == textureViewWidth)
+                    return option;
+
+                //if ((option.Width <= maxWidth) && (option.Height <= maxHeight) &&
+                //       option.Height == option.Width * h / w)
+                //{
+                //    if (option.Width >= textureViewWidth &&
+                //        option.Height >= textureViewHeight)
+                //    {
+                //        bigEnough.Add(option);
+                //    }
+                //    else
+                //    {
+                //        notBigEnough.Add(option);
+                //    }
+                //}
             }
 
             // Pick the smallest of those big enough. If there is no one big enough, pick the
@@ -217,16 +234,15 @@ namespace WeldingMask.Droid.Renderers
         public override void OnActivityCreated(Bundle savedInstanceState)
         {
             base.OnActivityCreated(savedInstanceState);
-            mFile = new File(Activity.GetExternalFilesDir(null), "pic.jpg");
+            mFile = new File(Activity.GetExternalFilesDir(null), "pic.jpg" );                       
         }
 
         public override void OnResume()
         {
             base.OnResume();
-                
+               
             StartBackgroundThread();
 
-            // the SurfaceTextureListener).
             if (mTextureView.IsAvailable)
             {
                 OpenCamera(mTextureView.Width, mTextureView.Height);
@@ -258,8 +274,26 @@ namespace WeldingMask.Droid.Renderers
 
                     // We don't use a front facing camera in this sample.
                     var facing = (Integer)characteristics.Get(CameraCharacteristics.LensFacing);
-                    if (facing != null && facing == (Integer.ValueOf((int)LensFacing.Front)))
+                    if (facing != null)
                     {
+                        if(facing == (Integer.ValueOf((int)LensFacing.Back)))
+                        {
+                            minimumLens = (float?) characteristics.Get(CameraCharacteristics.LensInfoMinimumFocusDistance);
+
+                            CameraExposureRange = (Range) characteristics.Get(CameraCharacteristics.SensorInfoSensitivityRange);
+
+                            ExposureTime = (Range) characteristics.Get(CameraCharacteristics.SensorInfoExposureTimeRange);
+
+                            FrameDuration = (long) characteristics.Get(CameraCharacteristics.SensorInfoMaxFrameDuration);
+
+
+                            availableFocalLenths = (float[]) characteristics.Get(CameraCharacteristics.LensInfoAvailableFocalLengths);
+
+                            AERangeCompensation = (Range) characteristics.Get(CameraCharacteristics.ControlAeCompensationRange);
+
+                        }
+
+                        if(facing == (Integer.ValueOf((int)LensFacing.Front)))
                         continue;
                     }
 
@@ -273,7 +307,7 @@ namespace WeldingMask.Droid.Renderers
                     Size largest = (Size)Collections.Max(Arrays.AsList(map.GetOutputSizes((int)ImageFormatType.Jpeg)),
                         new CompareSizesByArea());
                     mImageReader = ImageReader.NewInstance(largest.Width, largest.Height, ImageFormatType.Jpeg, /*maxImages*/2);
-                    mImageReader.SetOnImageAvailableListener(mOnImageAvailableListener, mBackgroundHandler);
+                    mImageReader.SetOnImageAvailableListener(mOnImageAvailableListener = new ImageAvailableListener(){ File = mFile, Owner = this }, mBackgroundHandler);
 
                     // Find out if we need to swap dimension to get the preview size relative to sensor
                     // coordinate.
@@ -407,7 +441,7 @@ namespace WeldingMask.Droid.Renderers
         {
             try
             {
-                mCameraOpenCloseLock.Acquire();
+                mCameraOpenCloseLock?.Acquire();
                 if (null != mCaptureSession)
                 {
                     mCaptureSession.Close();
@@ -445,10 +479,10 @@ namespace WeldingMask.Droid.Renderers
         // Stops the background thread and its {@link Handler}.
         private void StopBackgroundThread()
         {
-            mBackgroundThread.QuitSafely();
+            mBackgroundThread?.QuitSafely();
             try
             {
-                mBackgroundThread.Join();
+                mBackgroundThread?.Join();
                 mBackgroundThread = null;
                 mBackgroundHandler = null;
             }
@@ -532,7 +566,7 @@ namespace WeldingMask.Droid.Renderers
         }
 
         // Initiate a still image capture.
-        private void TakePicture()
+        public void TakePicture()
         {
             LockFocus();
         }
@@ -543,11 +577,13 @@ namespace WeldingMask.Droid.Renderers
             try
             {
                 // This is how to tell the camera to lock focus.
-
-                mPreviewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Start);
+                //mPreviewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Start);
                 // Tell #mCaptureCallback to wait for the lock.
                 mState = STATE_WAITING_LOCK;
-                mCaptureSession.Capture(mPreviewRequestBuilder.Build(), mCaptureCallback,
+               
+                mCaptureCallback = new CameraCaptureListener() { Owner = this, File = mFile };
+
+                mCaptureSession.Capture(mPreviewRequest, mCaptureCallback,
                         mBackgroundHandler);
             }
             catch (CameraAccessException e)
@@ -563,10 +599,11 @@ namespace WeldingMask.Droid.Renderers
             try
             {
                 // This is how to tell the camera to trigger.
-                mPreviewRequestBuilder.Set(CaptureRequest.ControlAePrecaptureTrigger, (int)ControlAEPrecaptureTrigger.Start);
+                //mPreviewRequestBuilder.Set(CaptureRequest.ControlAePrecaptureTrigger, (int)ControlAEPrecaptureTrigger.Start);
                 // Tell #mCaptureCallback to wait for the precapture sequence to be set.
                 mState = STATE_WAITING_PRECAPTURE;
-                mCaptureSession.Capture(mPreviewRequestBuilder.Build(), mCaptureCallback, mBackgroundHandler);
+               
+                mCaptureSession.Capture(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
             }
             catch (CameraAccessException e)
             {
@@ -586,18 +623,21 @@ namespace WeldingMask.Droid.Renderers
                     return;
                 }
                 // This is the CaptureRequest.Builder that we use to take a picture.
+
                 CaptureRequest.Builder captureBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.StillCapture);
                 captureBuilder.AddTarget(mImageReader.Surface);
 
                 // Use the same AE and AF modes as the preview.
-                captureBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.ContinuousPicture);
-                SetAutoFlash(captureBuilder);
+                //captureBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.ContinuousPicture);
+                //SetAutoFlash(captureBuilder);
 
+              
                 // Orientation
-                int rotation = (int)activity.WindowManager.DefaultDisplay.Rotation;
-                captureBuilder.Set(CaptureRequest.JpegOrientation, GetOrientation(rotation));
+                //int rotation = (int)activity.WindowManager.DefaultDisplay.Rotation;
+                //captureBuilder.Set(CaptureRequest.JpegOrientation, GetOrientation(rotation));
 
-                mCaptureSession.StopRepeating();
+                //mCaptureSession.StopRepeating();
+
                 mCaptureSession.Capture(captureBuilder.Build(), new CameraCaptureStillPictureSessionCallback(this), null);
             }
             catch (CameraAccessException e)
@@ -622,15 +662,7 @@ namespace WeldingMask.Droid.Renderers
         {
             try
             {
-                // Reset the auto-focus trigger
-                mPreviewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Cancel);
-                SetAutoFlash(mPreviewRequestBuilder);
-                mCaptureSession.Capture(mPreviewRequestBuilder.Build(), mCaptureCallback,
-                        mBackgroundHandler);
-                // After this, the camera will go back to the normal state of preview.
-                mState = STATE_PREVIEW;
-                mCaptureSession.SetRepeatingRequest(mPreviewRequest, mCaptureCallback,
-                        mBackgroundHandler);
+               
             }
             catch (CameraAccessException e)
             {
@@ -640,22 +672,111 @@ namespace WeldingMask.Droid.Renderers
 
         public void AdjustFocus(int focusValue)
         {
-           
+            if (mPreviewRequestBuilder == null)
+                return;
+
+            if (minimumLens != null && minimumLens != 0)
+            {
+                mPreviewRequestBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.Off);
+
+                float num = (((float)focusValue) * (float)minimumLens / 100);
+                mPreviewRequestBuilder.Set(CaptureRequest.LensFocusDistance, num);
+
+                mCaptureSession?.SetRepeatingRequest(mPreviewRequest = mPreviewRequestBuilder.Build(), null, mBackgroundHandler);
+            }
+            else if(availableFocalLenths!=null && availableFocalLenths.Any())
+            {
+                availableFocalLenths = availableFocalLenths.OrderBy((arg) => arg).ToArray();
+                
+                mPreviewRequestBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.Off);
+
+                float max1 = (float)availableFocalLenths.Last();//10000
+                float min1 = (float)availableFocalLenths.First();
+
+                var foc = ((focusValue * (max1 - min1)) / 100 + min1);
+
+                mPreviewRequestBuilder.Set(CaptureRequest.LensFocalLength, foc);
+
+                mCaptureSession?.SetRepeatingRequest(mPreviewRequest =mPreviewRequestBuilder.Build(), null, mBackgroundHandler);
+            }
+                       
         }
 
         public void AdjustExposure(int ExposureValue)
         {
+            if (mPreviewRequestBuilder == null)
+                return;
 
+            //if (CameraExposureRange != null && ExposureTime != null)
+            //{
+            //    mPreviewRequestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.Off);
+
+            //    int max1 = (int)CameraExposureRange.Upper;//10000
+            //    int min1 = (int)CameraExposureRange.Lower;//100
+
+            //    long maxE = (long)ExposureTime.Upper;
+            //    long minE = (long)ExposureTime.Lower;
+
+            //    var midE = (maxE + minE) / 2;
+
+            //    int iso = ((ExposureValue * (max1 - min1)) / 100 + min1);
+            //    mPreviewRequestBuilder.Set(CaptureRequest.SensorSensitivity, iso);
+            //    mPreviewRequestBuilder.Set(CaptureRequest.SensorExposureTime, midE);
+            //    mPreviewRequestBuilder.Set(CaptureRequest.SensorFrameDuration, FrameDuration);
+
+            //    mCaptureSession.SetRepeatingRequest(mPreviewRequest = mPreviewRequestBuilder.Build(), null, mBackgroundHandler);
+            //}
+            if(AERangeCompensation!=null)
+            {
+                mPreviewRequestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+
+                int max1 = (int)AERangeCompensation.Upper;//10000
+                int min1 = (int)AERangeCompensation.Lower;//100
+
+                int iso = ((ExposureValue * (max1 - min1)) / 100 + min1);
+
+                mPreviewRequestBuilder.Set(CaptureRequest.ControlAeExposureCompensation,iso);
+                mPreviewRequestBuilder.Set(CaptureRequest.SensorFrameDuration, FrameDuration);
+
+                mCaptureSession?.SetRepeatingRequest(mPreviewRequest = mPreviewRequestBuilder.Build(), null, mBackgroundHandler);
+            }
         }
 
         public void SetAutoExposure()
         {
+            if (mPreviewRequestBuilder == null)
+                return;
 
+            try
+            {
+                mPreviewRequestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+            }
+            catch (System.Exception)
+            {
+
+            }
+
+            mCaptureSession?.SetRepeatingRequest(mPreviewRequest = mPreviewRequestBuilder.Build(), null, mBackgroundHandler);
+
+            AdjustExposure(50);
         }
 
         public void SetAutoFocus()
         {
+            if (mPreviewRequestBuilder == null)
+                return;
 
+            try
+            {
+                mPreviewRequestBuilder.Set(CaptureRequest.ControlAfMode,(int) ControlAFMode.ContinuousPicture);
+                 
+            }
+            catch(System.Exception)
+            {
+                
+            }
+
+            mCaptureSession?.SetRepeatingRequest(mPreviewRequest = mPreviewRequestBuilder.Build(), null, mBackgroundHandler);
         }
 
 

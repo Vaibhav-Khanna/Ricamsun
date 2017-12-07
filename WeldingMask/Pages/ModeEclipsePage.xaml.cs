@@ -19,6 +19,12 @@ namespace WeldingMask.Pages
 		{         
             NavigationPage.SetHasNavigationBar(this, false);
 			InitializeComponent();	
+
+            if(Device.RuntimePlatform==Device.Android)
+            {
+                controls.Opacity = 1;
+            }
+
         }       
 
         protected override void OnBindingContextChanged()

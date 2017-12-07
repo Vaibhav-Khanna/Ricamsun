@@ -50,7 +50,10 @@ namespace WeldingMask.Droid.Renderers
             if (fragment != null)
             {
 
-                Plugin.CurrentActivity.CrossCurrentActivity.Current.Activity.FragmentManager.BeginTransaction().Remove(fragment).Commit();
+                //Plugin.CurrentActivity.CrossCurrentActivity.Current.Activity.FragmentManager.BeginTransaction().Remove(fragment).Commit();
+                fragment.OnPause();
+                fragment = null;
+
 
             }
 
@@ -68,6 +71,9 @@ namespace WeldingMask.Droid.Renderers
                         fragment.OnPause();
                     return;
                 }
+
+                Element.CapturePhoto -= Element_CapturePhoto;
+                Element.CapturePhoto += Element_CapturePhoto;
 
                 var activity = this.Context as Activity;
 
@@ -88,7 +94,7 @@ namespace WeldingMask.Droid.Renderers
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if (Element == null || Control == null)
+            if (Element == null || Control == null || fragment==null)
                 return;
 
             if (e.PropertyName == CameraView.FocusValueProperty.PropertyName)
@@ -118,13 +124,24 @@ namespace WeldingMask.Droid.Renderers
             }
         }
 
+        void Element_CapturePhoto()
+        {
+            fragment?.TakePicture();
+        }
+
         void AdjustFocus(int focusValue)
         {
+            if (focusValue < 0 || focusValue > 100)
+                return;
+            
             fragment?.AdjustFocus(focusValue);
         }
 
         void AdjustExposure(int ExposureValue)
         {
+            if (ExposureValue < 0 || ExposureValue > 100)
+                return;
+            
             fragment?.AdjustExposure(ExposureValue);
         }
 
@@ -153,7 +170,7 @@ namespace WeldingMask.Droid.Renderers
 
         async void Delay()
         {
-            await Task.Delay(1500).ConfigureAwait(false);
+            await Task.Delay(800).ConfigureAwait(false);
 
             if (fragment != null)
                 fragment.Dispose();
@@ -161,6 +178,18 @@ namespace WeldingMask.Droid.Renderers
             fragment = Camera2BasicFragment.NewInstance();
                       
             (this.Context as Activity).FragmentManager.BeginTransaction().Replace(Resource.Id.container, fragment).Commit();
+
+
+            if (Element.ExposureEnable)
+                AdjustExposure(Element.ExposureValue);
+            else
+                SetAutoExposure();
+
+
+            if (Element.FocusEnable)
+                AdjustFocus(Element.FocusValue);
+            else
+                SetAutoFocus();
         }
     }
 }
