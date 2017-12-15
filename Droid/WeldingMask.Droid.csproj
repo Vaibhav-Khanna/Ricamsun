@@ -127,12 +127,6 @@
     <Reference Include="Plugin.Media">
       <HintPath>..\packages\Xam.Plugin.Media.3.0.1\lib\MonoAndroid10\Plugin.Media.dll</HintPath>
     </Reference>
-    <Reference Include="Plugin.DeviceOrientation.Abstractions">
-      <HintPath>..\packages\Plugin.DeviceOrientation.1.0.5\lib\MonoAndroid10\Plugin.DeviceOrientation.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Plugin.DeviceOrientation">
-      <HintPath>..\packages\Plugin.DeviceOrientation.1.0.5\lib\MonoAndroid10\Plugin.DeviceOrientation.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Android.Support.v13">
       <HintPath>..\packages\Xamarin.Android.Support.v13.25.4.0.2\lib\MonoAndroid70\Xamarin.Android.Support.v13.dll</HintPath>
     </Reference>
