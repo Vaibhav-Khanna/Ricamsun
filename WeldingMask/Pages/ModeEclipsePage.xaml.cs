@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Plugin.DeviceOrientation;
-using Plugin.DeviceOrientation.Abstractions;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using WeldingMask.PageModels;
