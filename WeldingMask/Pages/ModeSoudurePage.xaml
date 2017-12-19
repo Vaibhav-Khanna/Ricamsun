@@ -67,7 +67,7 @@
 
                   <StackLayout Orientation="Vertical" Margin="0,10,0,0" Grid.Row="1" Grid.Column="3" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                       <Image x:Name="ExposureButton" WidthRequest="28" HeightRequest="28"  Style="{StaticResource ExposureButtonOff}" Aspect="AspectFit"  VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand"/>
-                     <Label x:Name="ExposureLabel" Style="{StaticResource LabelOff}" HorizontalOptions="Center"  VerticalOptions="StartAndExpand" Text="Exposure" />
+                     <Label x:Name="ExposureLabel" Style="{StaticResource LabelOff}" HorizontalOptions="Center"  VerticalOptions="StartAndExpand" Text="Brightness" />
                 </StackLayout>
               
                   
