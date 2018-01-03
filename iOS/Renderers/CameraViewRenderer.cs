@@ -197,6 +197,7 @@ namespace WeldingMask.iOS.Renderers
             }
            	 
             //AdjustExposure(50);
+
         }
 
 
@@ -223,11 +224,15 @@ namespace WeldingMask.iOS.Renderers
                 device.UnlockForConfiguration();
             }
 
+
             //AdjustExposure(50);
+
+           
+
         }
 
 
-        public async void AdjustFocus(int F)
+        public async void AdjustFocus(int F, bool forceLock = true)
         {
             if (F < 0 || F > 100)
                 return;
@@ -237,13 +242,19 @@ namespace WeldingMask.iOS.Renderers
             if (device.LockingFocusWithCustomLensPositionSupported)
             {
                 device.LockForConfiguration(out error);
+                if (forceLock)
+                {
+                    device.FocusMode = AVCaptureFocusMode.Locked;
+                }
                 await device.SetFocusModeLockedAsync((float)F/100);
                 device.UnlockForConfiguration();
             }
         }
 
 
+
         public void AdjustExposure(int E)
+
         {
             if (E < 0 || E > 100)
                 return;
@@ -260,6 +271,7 @@ namespace WeldingMask.iOS.Renderers
             if (device.LockingFocusWithCustomLensPositionSupported)
             {
                 device.LockForConfiguration(out error);
+
              
                 // changing just the shutter speed 
                 //var newDurationSeconds = factor * (maxDuration - minDuration) + minDuration;
