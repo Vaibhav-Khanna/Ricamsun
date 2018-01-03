@@ -13,6 +13,7 @@ using WeldingMask.Renderers;
 using Photos;
 using PhotosUI;
 using MaterialControls;
+using CoreMedia;
 
 [assembly: ExportRenderer(typeof(CameraView), typeof(CameraViewRenderer))]
 namespace WeldingMask.iOS.Renderers
@@ -28,6 +29,8 @@ namespace WeldingMask.iOS.Renderers
         UIView liveCameraStream;
         float maxExposure;
         float minExposure;
+        double maxDuration;
+        double minDuration;
         double width;
         double height;
 
@@ -153,8 +156,13 @@ namespace WeldingMask.iOS.Renderers
 
             var captureDevice = AVCaptureDevice.GetDefaultDevice(AVMediaType.Video);
             device = captureDevice;
-            maxExposure = device.MaxExposureTargetBias;
-            minExposure = device.MinExposureTargetBias;
+
+            maxExposure = device.ActiveFormat.MaxISO;
+            minExposure = device.ActiveFormat.MinISO;
+
+            maxDuration = device.ActiveFormat.MaxExposureDuration.Seconds;
+            minDuration = device.ActiveFormat.MinExposureDuration.Seconds;
+
             ConfigureCameraForDevice(captureDevice);
             captureDeviceInput = AVCaptureDeviceInput.FromDevice(captureDevice);
 
@@ -188,7 +196,8 @@ namespace WeldingMask.iOS.Renderers
                 device.UnlockForConfiguration();
             }
            	 
-            AdjustExposure(50, false);
+            //AdjustExposure(50);
+
         }
 
 
@@ -215,7 +224,11 @@ namespace WeldingMask.iOS.Renderers
                 device.UnlockForConfiguration();
             }
 
-            AdjustExposure(50, false);
+
+            //AdjustExposure(50);
+
+           
+
         }
 
 
@@ -239,7 +252,9 @@ namespace WeldingMask.iOS.Renderers
         }
 
 
-        public async void AdjustExposure(int E, bool forceLock = true)
+
+        public void AdjustExposure(int E)
+
         {
             if (E < 0 || E > 100)
                 return;
@@ -250,20 +265,43 @@ namespace WeldingMask.iOS.Renderers
 
             float factor = ((float)E / 100);
 
-            var targetExposure = factor * range  + minExposure;
+            var targetISO = factor * range  + minExposure;
+
 
             if (device.LockingFocusWithCustomLensPositionSupported)
             {
                 device.LockForConfiguration(out error);
-                if (forceLock)
-                {
-                    device.ExposureMode = AVCaptureExposureMode.Locked;
-                }
-                await device.SetExposureTargetBiasAsync((targetExposure));
+
+             
+                // changing just the shutter speed 
+                //var newDurationSeconds = factor * (maxDuration - minDuration) + minDuration;
+                //device.LockExposure(CMTime.FromSeconds(newDurationSeconds, 1000 * 1000 * 1000), device.ISO, HandleAction);
+
+                // changing just the shutter speed with a factor adjustment to the upper value
+                //var newDurationSeconds = factor * (maxDuration*0.1 - minDuration) + minDuration;
+                //device.LockExposure(CMTime.FromSeconds(newDurationSeconds, 1000 * 1000 * 1000),device.ISO,HandleAction);
+
+                //changing the iso value
+                //device.LockExposure(device.ExposureDuration, targetISO, HandleAction);
+
+                // changin both iso and shutter speed
+                //var newDurationSeconds = factor * ( maxDuration - minDuration) + minDuration;
+                //device.LockExposure(CMTime.FromSeconds(newDurationSeconds, 1000 * 1000 * 1000), targetISO, HandleAction);
+
+                // changin both iso and shutter speed { with factor 0.1 adjustment }
+                var newDurationSeconds = factor * ( maxDuration*0.1 - minDuration) + minDuration;
+                device.LockExposure(CMTime.FromSeconds(newDurationSeconds, 1000 * 1000 * 1000), targetISO, HandleAction);
+
+
                 device.UnlockForConfiguration();
             }
+
         }
 
+        void HandleAction(CoreMedia.CMTime obj)
+        {
+
+        }
 
         public async Task AuthorizeCameraUse()
         {
