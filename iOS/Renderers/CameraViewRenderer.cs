@@ -196,7 +196,7 @@ namespace WeldingMask.iOS.Renderers
                 device.UnlockForConfiguration();
             }
            	 
-            AdjustExposure(50);
+            //AdjustExposure(50);
         }
 
 
@@ -223,7 +223,7 @@ namespace WeldingMask.iOS.Renderers
                 device.UnlockForConfiguration();
             }
 
-            AdjustExposure(50);
+            //AdjustExposure(50);
         }
 
 
