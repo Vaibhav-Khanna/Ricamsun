@@ -267,7 +267,6 @@ namespace WeldingMask.iOS.Renderers
 
             var targetISO = factor * range  + minExposure;
 
-
             if (device.LockingFocusWithCustomLensPositionSupported)
             {
                 device.LockForConfiguration(out error);
@@ -278,7 +277,7 @@ namespace WeldingMask.iOS.Renderers
                 //device.LockExposure(CMTime.FromSeconds(newDurationSeconds, 1000 * 1000 * 1000), device.ISO, HandleAction);
 
                 // changing just the shutter speed with a factor adjustment to the upper value
-                //var newDurationSeconds = factor * (maxDuration*0.1 - minDuration) + minDuration;
+                //var newDurationSeconds = factor * (maxDuration * 0.02 - minDuration * 0.01) + minDuration;
                 //device.LockExposure(CMTime.FromSeconds(newDurationSeconds, 1000 * 1000 * 1000),device.ISO,HandleAction);
 
                 //changing the iso value
@@ -289,7 +288,7 @@ namespace WeldingMask.iOS.Renderers
                 //device.LockExposure(CMTime.FromSeconds(newDurationSeconds, 1000 * 1000 * 1000), targetISO, HandleAction);
 
                 // changin both iso and shutter speed { with factor 0.1 adjustment }
-                var newDurationSeconds = factor * ( maxDuration*0.1 - minDuration) + minDuration;
+                var newDurationSeconds = factor * ( maxDuration * 0.005 - minDuration * 0.001) + minDuration;
                 device.LockExposure(CMTime.FromSeconds(newDurationSeconds, 1000 * 1000 * 1000), targetISO, HandleAction);
 
 
