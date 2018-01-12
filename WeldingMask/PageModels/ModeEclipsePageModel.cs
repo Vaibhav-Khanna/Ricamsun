@@ -62,7 +62,7 @@ namespace WeldingMask.PageModels
             }
         }
 
-        private int exposurevalue = 33;
+        private int exposurevalue = 100;
         public int ExposureValue
         {
             get { return exposurevalue; }
