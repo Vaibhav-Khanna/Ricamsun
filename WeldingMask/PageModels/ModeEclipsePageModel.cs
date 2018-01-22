@@ -43,6 +43,16 @@ namespace WeldingMask.PageModels
                 }
                 else if(ExposureOn)
                 {
+                    if (slidervalue >= 50)
+                    {
+                        OverOpacity = 0;
+                    }
+                    else
+                    {
+                        double factor = ((double)2 * slidervalue / 100);
+                        OverOpacity = factor * (-0.7) + 0.7;
+                    }
+
                     ExposureValue = slidervalue;
                 }
 
@@ -50,6 +60,16 @@ namespace WeldingMask.PageModels
             }
         }
 
+        double overopacity = 0;
+        public double OverOpacity
+        {
+            get { return overopacity; }
+            set
+            {
+                overopacity = value;
+                RaisePropertyChanged();
+            }
+        }
 
         private int focusvalue = 75;
         public int FocusValue
