@@ -71,7 +71,7 @@ namespace WeldingMask.PageModels
             }
         }
 
-        private int focusvalue = 75;
+        private int focusvalue = 80;
         public int FocusValue
         {
             get { return focusvalue; }
@@ -82,7 +82,7 @@ namespace WeldingMask.PageModels
             }
         }
 
-        private int exposurevalue = 100;
+        private int exposurevalue = 80;
         public int ExposureValue
         {
             get { return exposurevalue; }
