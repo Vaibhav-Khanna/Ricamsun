@@ -9,9 +9,6 @@
         <rend:CameraView BackgroundColor="Black" x:Name="cameraView" AbsoluteLayout.LayoutFlags="All" ExposureEnable="{Binding ShieldOn}" FocusEnable="{Binding ShieldOn}" FocusValue="{Binding FocusValue}" ExposureValue="{Binding ExposureValue}" AbsoluteLayout.LayoutBounds="0,0,1,1" >            
         </rend:CameraView>
 
-          <StackLayout Orientation="Vertical" BackgroundColor="Black" Padding="0,0,0,0" Opacity="{Binding OverOpacity}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
-         </StackLayout>
-
         
         <StackLayout x:Name="PageContent" Orientation="Vertical"  BackgroundColor="Transparent" Padding="0,0,0,0"  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
 
