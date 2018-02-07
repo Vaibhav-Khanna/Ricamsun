@@ -115,7 +115,7 @@
                 </Grid>
                 <Image Source="splash.png" HorizontalOptions="FillAndExpand" HeightRequest="280" Aspect="AspectFit" VerticalOptions="EndAndExpand">
                 </Image>
-                <Label Text="©2017 RicamSun - Tout droits réservés" VerticalOptions="End" Margin="0,0,0,20" Style="{StaticResource CopyRightsStyle}">
+                <Label x:Name="date" VerticalOptions="End" Margin="0,0,0,20" Style="{StaticResource CopyRightsStyle}">
                 </Label>
             </StackLayout>
       </ScrollView>
