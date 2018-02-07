@@ -91,6 +91,5 @@
                 </BoxView>
             </Grid>
         </StackLayout>
-    </AbsoluteLayout>
-    
+    </AbsoluteLayout>    
 </ContentPage>

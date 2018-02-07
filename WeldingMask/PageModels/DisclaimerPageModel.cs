@@ -20,7 +20,9 @@ namespace WeldingMask.PageModels
             }
         }
 
-       
+        public string Text { get; set; } = "En aucun cas il ne faut observer le soleil ou effectuer des soudures à l’oeil nu." + Environment.NewLine + Environment.NewLine  + "Pour le soleil, il est conseillé de limiter à quelques minutes les observations et d’effectuer un temps de pause entre deux observations afin de reposer les yeux." + Environment.NewLine+ Environment.NewLine + "Si vous constater une diminution de l’acuité visuelle, consulter rapidement un médecin." + Environment.NewLine+ Environment.NewLine + "La société RICAMSUN décline toutes responsabilités en cas de dommages corporels ou matériels." + Environment.NewLine + Environment.NewLine+ "In no case you should observe the sun or perform welds without eyes protections." + Environment.NewLine + Environment.NewLine+ "For the sun, we advise to limit to a few minutes of observation. Do not forget to rest your eyes for a moment in between two observations." + Environment.NewLine+ Environment.NewLine + "If you notice a decrease in your visual acuity, consult a doctor quickly." + Environment.NewLine + Environment.NewLine+ "The RICAMSUN company declines any responsibility in case of injury or material damage.";
+
+
         public ICommand ContinueCommand
         {
             get
