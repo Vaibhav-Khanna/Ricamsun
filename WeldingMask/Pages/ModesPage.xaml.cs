@@ -11,6 +11,8 @@ namespace WeldingMask.Pages
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
+
+            date.Text = $"©{DateTime.UtcNow.Year} RicamSun - Tout droits réservés";
         }
     }
 }
