@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="WeldingMask.Pages.DisclaimerPage">
+	<ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TitleLabelStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="FontFamily" Value="SFUIText-Regular" />
+                <Setter Property="TextColor" Value="#000000" />
+                <Setter Property="FontSize" Value="18" />
+            </Style>
+
+            <Style x:Key="ContinueLabelStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="FontFamily" Value="SFUIText-Medium" />
+                <Setter Property="TextColor" Value="#ffffff" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+
+            <Style x:Key="TermsLabelStyle" BasedOn="{StaticResource TitleLabelStyle}" TargetType="Label">
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="Margin" Value="0,0,10,0" />
+            </Style>
+
+            <Style x:Key="DetailLabelStyle" BasedOn="{StaticResource TitleLabelStyle}" TargetType="Label">
+                <Setter Property="TextColor" Value="#4a4a4a" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="Margin" Value="15" />
+            </Style>
+            
+            <Style x:Key="SeperatorStyle" TargetType="BoxView">
+                <Setter Property="Color" Value="#e9e9e9" />
+                <Setter Property="HeightRequest" Value="1" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout Spacing="0">
+        <StackLayout.Padding>
+            <OnPlatform x:TypeArguments="Thickness" iOS="0,20,0,0" Android="0" />
+        </StackLayout.Padding>
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="39"/>
+                <RowDefinition Height="1"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Text="Disclaimer" Style="{StaticResource TitleLabelStyle}"></Label>
+            <BoxView Grid.Row="1" Style="{StaticResource SeperatorStyle}"></BoxView>
+        </Grid>
+        <ScrollView VerticalOptions="FillAndExpand">
+            <Label  Style="{StaticResource DetailLabelStyle}" VerticalOptions="FillAndExpand" Text="{Binding Text}"/>
+        </ScrollView>
+        <Grid Margin="0,0,0,10" VerticalOptions="End">
+             <Grid.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TermsConditions_Tapped" />
+                </Grid.GestureRecognizers>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="85*"/>
+            </Grid.ColumnDefinitions>
+            <Image x:Name="TermsConditions" Source="uncheck.png" Margin="10">
+               
+            </Image>
+            <Label Grid.Column="1"  Style="{StaticResource TermsLabelStyle}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="J’ai lu et accepte les risques liés au mauvais
+usage de l’application."></Span>
+                        <Span Text="RicamSun" FontAttributes="Bold" FontSize="12"></Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </Grid>
+        <Grid x:Name="Validate" VerticalOptions="End" BackgroundColor="#d9d9d9">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ContinueCommand}"/>
+            </Grid.GestureRecognizers>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Text="Valider" Style="{StaticResource ContinueLabelStyle}" FontSize="20" ></Label>
+        </Grid>
+    </StackLayout>
+</ContentPage>
