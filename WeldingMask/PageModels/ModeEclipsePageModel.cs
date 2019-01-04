@@ -9,23 +9,23 @@ namespace WeldingMask.PageModels
 {
     public class ModeEclipsePageModel : BasePageModel
     {
-        
+
 
         public Command ShieldTap => new Command(() =>
        {
-            ShieldOn = !ShieldOn;
+           ShieldOn = !ShieldOn;
        });
 
         public Command FocusTap => new Command(() =>
         {
-            if(ShieldOn)
-            FocusOn = !FocusOn;
+            if (ShieldOn)
+                FocusOn = !FocusOn;
         });
 
         public Command ExposureTap => new Command(() =>
         {
             if (ShieldOn)
-            ExposureOn = !ExposureOn;
+                ExposureOn = !ExposureOn;
         });
 
 
@@ -41,7 +41,7 @@ namespace WeldingMask.PageModels
                 {
                     FocusValue = slidervalue;
                 }
-                else if(ExposureOn)
+                else if (ExposureOn)
                 {
                     //if (slidervalue >= 50)
                     //{
@@ -82,7 +82,7 @@ namespace WeldingMask.PageModels
             }
         }
 
-        private int exposurevalue = 80;
+        private int exposurevalue = 25;
         public int ExposureValue
         {
             get { return exposurevalue; }
@@ -183,7 +183,7 @@ namespace WeldingMask.PageModels
         {
             base.ViewIsAppearing(sender, e);
 
-            ShieldOn = false; 
+            ShieldOn = false;
         }
 
 

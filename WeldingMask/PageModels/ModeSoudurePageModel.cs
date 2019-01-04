@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace WeldingMask.PageModels
 {
-    public class ModeSoudurePageModel: BasePageModel
+    public class ModeSoudurePageModel : BasePageModel
     {
-       
+
         public Command ShieldTap => new Command(() =>
         {
             ShieldOn = !ShieldOn;
@@ -16,13 +16,13 @@ namespace WeldingMask.PageModels
         public Command FocusTap => new Command(() =>
         {
             if (ShieldOn)
-            FocusOn = !FocusOn;
+                FocusOn = !FocusOn;
         });
 
         public Command ExposureTap => new Command(() =>
         {
             if (ShieldOn)
-            ExposureOn = !ExposureOn;
+                ExposureOn = !ExposureOn;
         });
 
 
@@ -59,7 +59,7 @@ namespace WeldingMask.PageModels
             }
         }
 
-        private int exposurevalue = 80;
+        private int exposurevalue = 25;
         public int ExposureValue
         {
             get { return exposurevalue; }
@@ -163,6 +163,6 @@ namespace WeldingMask.PageModels
 
             ShieldOn = false;
         }
-       
+
     }
 }
