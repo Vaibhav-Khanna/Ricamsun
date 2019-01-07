@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.0.1" package="com.matsiya.RicamSun" android:installLocation="auto" android:versionCode="0000010">
-	<uses-sdk android:minSdkVersion="21" />
-	<uses-permission android:name="android.permission.CAMERA" />
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-	<application android:label="RicamSun" android:icon="@drawable/icon">
-		<provider android:name="android.support.v4.content.FileProvider" android:authorities="com.matsiya.RicamSun.fileprovider" android:exported="false" android:grantUriPermissions="true">
-			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"></meta-data>
-		</provider>
-	</application>
+    <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="28" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <application android:label="RicamSun" android:icon="@drawable/icon">
+        <provider android:name="android.support.v4.content.FileProvider" android:authorities="com.matsiya.RicamSun.fileprovider" android:exported="false" android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths">
+            </meta-data>
+        </provider>
+    </application>
 </manifest>
