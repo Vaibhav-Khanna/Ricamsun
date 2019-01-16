@@ -228,7 +228,7 @@ namespace WeldingMask.Droid.Renderers
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
-            mTextureView = (AutoFitTextureView)view.FindViewById(Resource.Id.textureView);           
+            mTextureView = (AutoFitTextureView)view.FindViewById(Resource.Id.textureVw);           
         }
 
         public override void OnActivityCreated(Bundle savedInstanceState)
@@ -252,6 +252,9 @@ namespace WeldingMask.Droid.Renderers
                 mTextureView.SurfaceTextureListener = mSurfaceTextureListener;
             }
         }
+
+
+
 
         public override void OnPause()
         {
@@ -700,6 +703,17 @@ namespace WeldingMask.Droid.Renderers
                 mCaptureSession?.SetRepeatingRequest(mPreviewRequest =mPreviewRequestBuilder.Build(), null, mBackgroundHandler);
             }
                        
+        }
+
+        public void AdjustZoom(double value)
+        {
+            //if (mPreviewRequestBuilder == null)
+                //return;
+
+                //mPreviewRequestBuilder.Set(CameraCharacteristics., (int)ControlAFMode.Off);
+
+                //mCaptureSession?.SetRepeatingRequest(mPreviewRequest = mPreviewRequestBuilder.Build(), null, mBackgroundHandler);
+
         }
 
         public void AdjustExposure(int ExposureValue)

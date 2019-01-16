@@ -42,6 +42,10 @@ namespace WeldingMask.Droid.Renderers
 
         Camera2BasicFragment fragment;
 
+        public CameraViewRenderer(Context context) : base(context)
+        {
+
+        }
 
         protected override void Dispose(bool disposing)
         {
@@ -49,12 +53,9 @@ namespace WeldingMask.Droid.Renderers
 
             if (fragment != null)
             {
-
                 //Plugin.CurrentActivity.CrossCurrentActivity.Current.Activity.FragmentManager.BeginTransaction().Remove(fragment).Commit();
                 fragment.OnPause();
                 fragment = null;
-
-
             }
 
         }
@@ -122,6 +123,11 @@ namespace WeldingMask.Droid.Renderers
                 else
                     SetAutoFocus();
             }
+
+            if (e.PropertyName == CameraView.ZoomValueProperty.PropertyName)
+            {
+                HandleZoom(Element.ZoomValue);
+            }
         }
 
         void Element_CapturePhoto()
@@ -166,6 +172,11 @@ namespace WeldingMask.Droid.Renderers
                 view.Measure(msw, msh);
                 view.Layout(0, 0, r - l, b - t);
             }
+        }
+
+        void HandleZoom(double value)
+        {
+            fragment?.AdjustZoom(value);
         }
 
         async void Delay()

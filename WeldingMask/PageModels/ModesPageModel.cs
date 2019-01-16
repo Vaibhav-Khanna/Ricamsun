@@ -3,8 +3,10 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
+using Plugin.SpeechRecognition;
 using WeldingMask.PageModels.Base;
 using Xamarin.Forms;
+using System.Reactive.Linq;
 
 namespace WeldingMask.PageModels
 {
@@ -12,7 +14,14 @@ namespace WeldingMask.PageModels
     {
         public ModesPageModel()
         {
+           
         }
+
+        public Command ContinueCommand => new Command(() =>
+        {
+            Device.OpenUri(new Uri("http://ricamsun.com/cgu/"));
+        });
+
 
         public ICommand SoudureCommand
         {
@@ -22,7 +31,9 @@ namespace WeldingMask.PageModels
                 {
                     var result = await CheckPermissionCamera();
 
-                    if(result)
+                    var granted = await CrossSpeechRecognition.Current.RequestPermission();
+
+                    if (result && granted == SpeechRecognizerStatus.Available)
                     await CoreMethods.PushPageModel<ModeSoudurePageModel>(null);
                 });
             }
@@ -36,8 +47,9 @@ namespace WeldingMask.PageModels
                 {
                     var result_C = await CheckPermissionCamera();
                     var result_P = await CheckPermissionPhoto();
+                    var granted = await CrossSpeechRecognition.Current.RequestPermission();
 
-                    if (result_C && result_P)
+                    if (result_C && result_P && granted == SpeechRecognizerStatus.Available)
                     await CoreMethods.PushPageModel<ModeEclipsePageModel>(null);
                 });
             }
@@ -47,13 +59,13 @@ namespace WeldingMask.PageModels
         {
             try
             {                
-                var Is_Available = Plugin.Media.CrossMedia.Current.IsCameraAvailable;
+                //var Is_Available = Plugin.Media.CrossMedia.Current.IsCameraAvailable;
 
-                if (!Is_Available)
-                {
-                    await CoreMethods.DisplayAlert("Caméra", "Camera is not available on this device", "OK");
-                    return false;
-                }
+                //if (!Is_Available)
+                //{
+                //    await CoreMethods.DisplayAlert("Caméra", "Camera is not available on this device", "OK");
+                //    return false;
+                //}
 
                 var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
                

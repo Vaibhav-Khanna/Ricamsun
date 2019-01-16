@@ -5,6 +5,8 @@ using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using WeldingMask.PageModels;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
+using Application = Xamarin.Forms.Application;
 
 namespace WeldingMask.Pages
 {
@@ -14,11 +16,13 @@ namespace WeldingMask.Pages
         private ModeEclipsePageModel context;
 
 		public ModeEclipsePage()
-		{         
-            NavigationPage.SetHasNavigationBar(this, false);
-			InitializeComponent();	
+        {
+            Xamarin.Forms.NavigationPage.SetHasNavigationBar(this, false);
+			InitializeComponent();
 
-            if(Device.RuntimePlatform==Device.Android)
+            //On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
+
+            if (Device.RuntimePlatform==Device.Android)
             {
                 controls.Opacity = 1;
             }
@@ -48,8 +52,8 @@ namespace WeldingMask.Pages
             {
                 if (context.ShieldOn)
                 {
-                    ShieldButton.Style = (Style)Application.Current.Resources["ShieldButtonOn"];
-                    ShieldLabel.Text = "Stop"; 
+                    btnShield.Source = "btnstart.png";
+
                     ExposureLabel.Opacity = 1;
                     FocusLabel.Opacity = 1;
                     ExposureButton.Opacity = 1;
@@ -57,8 +61,7 @@ namespace WeldingMask.Pages
                 }
                 else
                 {
-                    ShieldButton.Style = (Style)Application.Current.Resources["ShieldButtonOff"];                  
-                    ShieldLabel.Text = "Start";                  
+                    btnShield.Source = "btnstop.png";                     
                     ExposureLabel.Opacity = 0.3;
                     FocusLabel.Opacity = 0.3;
                     ExposureButton.Opacity = 0.3;
@@ -116,7 +119,7 @@ namespace WeldingMask.Pages
            
         }
 
-        void TakePhoto(object sender, System.EventArgs e)
+        public void TakePhoto(object sender, System.EventArgs e)
         {
             cameraView.TakePhoto();
         }

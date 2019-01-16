@@ -35,6 +35,13 @@ namespace WeldingMask.Renderers
             set { SetValue(ExposureValueProperty, value); }
         }
 
+        public static readonly BindableProperty ZoomValueProperty = BindableProperty.Create("ZoomValue", typeof(int), typeof(CameraView), 0 );
+        public double ZoomValue
+        {
+            get { return (int)GetValue(ZoomValueProperty); }
+            set { SetValue(ZoomValueProperty, value); }
+        }
+
         public delegate void EventHandler();
 
         public event EventHandler CapturePhoto;

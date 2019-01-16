@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace WeldingMask.Pages
 {
@@ -10,7 +11,9 @@ namespace WeldingMask.Pages
         public ModesPage()
         {
             InitializeComponent();
-            NavigationPage.SetHasNavigationBar(this, false);
+            Xamarin.Forms.NavigationPage.SetHasNavigationBar(this, false);
+
+            On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
 
             date.Text = $"©{DateTime.UtcNow.Year} RicamSun - Tout droits réservés";
         }

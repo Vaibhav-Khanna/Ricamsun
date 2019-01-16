@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using Plugin.SpeechRecognition;
 using WeldingMask.PageModels.Base;
 using Xamarin.Forms;
 
@@ -7,7 +8,44 @@ namespace WeldingMask.PageModels
 {
     public class ModeSoudurePageModel: BasePageModel
     {
-       
+
+        IDisposable listener;
+
+        public ModeSoudurePageModel()
+        {
+
+            listener = CrossSpeechRecognition.Current.ContinuousDictation().Subscribe(phrase =>
+            {
+                if (!string.IsNullOrWhiteSpace(phrase))
+                {
+                    if (phrase.ToLower() == "start")
+                    {
+                        ShieldOn = true;
+                    }
+                    else if (phrase.ToLower() == "stop")
+                    {
+                        ShieldOn = false;
+                    }
+                    else if (phrase.ToLower().Trim() == "bright")
+                    {
+                        ExposureValue += 10;
+
+                        if (exposurevalue > 100)
+                            ExposureValue = 100;
+
+                    }
+                    else if (phrase.ToLower().Trim() == "dark")
+                    {
+                        ExposureValue -= 10;
+
+                        if (exposurevalue < 0)
+                            ExposureValue = 0;
+
+                    }
+                }
+            });
+        }
+
         public Command ShieldTap => new Command(() =>
         {
             ShieldOn = !ShieldOn;
@@ -42,6 +80,18 @@ namespace WeldingMask.PageModels
                 {
                     ExposureValue = slidervalue;
                 }
+
+                RaisePropertyChanged();
+            }
+        }
+
+        private int zoomvalue = 0;
+        public int ZoomValue
+        {
+            get { return zoomvalue; }
+            set
+            {
+                zoomvalue = value;
 
                 RaisePropertyChanged();
             }
@@ -163,6 +213,13 @@ namespace WeldingMask.PageModels
 
             ShieldOn = false;
         }
-       
+
+        protected override void ViewIsDisappearing(object sender, EventArgs e)
+        {
+            base.ViewIsDisappearing(sender, e);
+
+            listener.Dispose();
+        }
+
     }
 }

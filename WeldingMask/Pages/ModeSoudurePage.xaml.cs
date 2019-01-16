@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using WeldingMask.PageModels;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
+using Application = Xamarin.Forms.Application;
 
 namespace WeldingMask.Pages
 {
@@ -12,7 +14,8 @@ namespace WeldingMask.Pages
 
         public ModeSoudurePage()
         {
-            NavigationPage.SetHasNavigationBar(this, false);
+            Xamarin.Forms.NavigationPage.SetHasNavigationBar(this, false);
+
             InitializeComponent();
 
             if (Device.RuntimePlatform == Device.Android)
@@ -44,8 +47,7 @@ namespace WeldingMask.Pages
             {
                 if (context.ShieldOn)
                 {
-                    ShieldButton.Style = (Style)Application.Current.Resources["ShieldButtonOn"];
-                    ShieldLabel.Text = "Stop";
+                    btnShield.Source = "btnstart.png";
                     ExposureLabel.Opacity = 1;
                     FocusLabel.Opacity = 1;
                     ExposureButton.Opacity = 1;
@@ -53,8 +55,7 @@ namespace WeldingMask.Pages
                 }
                 else
                 {
-                    ShieldButton.Style = (Style)Application.Current.Resources["ShieldButtonOff"];
-                    ShieldLabel.Text = "Start";
+                    btnShield.Source = "btnstop.png";
                     ExposureLabel.Opacity = 0.3;
                     FocusLabel.Opacity = 0.3;
                     ExposureButton.Opacity = 0.3;

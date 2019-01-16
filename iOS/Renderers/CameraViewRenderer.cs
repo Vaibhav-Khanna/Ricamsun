@@ -102,6 +102,10 @@ namespace WeldingMask.iOS.Renderers
                     SetAutoFocus();
             }
              
+            if(e.PropertyName == CameraView.ZoomValueProperty.PropertyName) 
+            {
+                SliderChanged((float)(Element.ZoomValue*0.01));
+            }
 
         }
 
@@ -183,6 +187,7 @@ namespace WeldingMask.iOS.Renderers
         {
             var error = new NSError();
            
+
             if (device.IsFocusModeSupported(AVCaptureFocusMode.ContinuousAutoFocus))
             {
                 device.LockForConfiguration(out error);
@@ -311,6 +316,36 @@ namespace WeldingMask.iOS.Renderers
         void HandleAction(CoreMedia.CMTime obj)
         {
 
+        }
+
+        float MaxZoom
+        {
+            get
+            {
+                return (float)Math.Min(device != null ? device.ActiveFormat.VideoMaxZoomFactor : 1, 6);
+            }
+        }
+
+        public void SliderChanged(float value)
+        {
+            if (device != null && !device.RampingVideoZoom)
+            {
+                var error = new NSError();
+
+                device.LockForConfiguration(out error);
+                device.VideoZoomFactor = GetZoomSliderValue(value);
+                device.UnlockForConfiguration();
+            }
+        }
+
+        float GetZoomSliderValue(float value)
+        {
+            return (float)Math.Pow(MaxZoom, value);
+        }
+
+        void setZoomSliderValue(float value)
+        {
+            //slider.Value = (float)Math.Log(value) / (float)Math.Log(MaxZoom);
         }
 
         public async Task AuthorizeCameraUse()

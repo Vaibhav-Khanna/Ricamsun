@@ -98,6 +98,7 @@
                     </BoxView>
                     <BoxView Grid.Row="7" Style="{StaticResource SeperatorStyle}">
                     </BoxView>
+                    
                     <Grid Grid.Row="8" BackgroundColor="#181818" >
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ContinueCommand}" />
@@ -110,6 +111,7 @@
                         </Label>
                         <Image Grid.Column="1" Source="arrow.png" Margin="15"></Image>
                     </Grid>
+                    
                     <BoxView Grid.Row="9" Style="{StaticResource SeperatorStyle}">
                     </BoxView>
                 </Grid>

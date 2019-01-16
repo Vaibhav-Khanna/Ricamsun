@@ -12,7 +12,7 @@ namespace WeldingMask.Droid
     public class MainApplication : Application, Application.IActivityLifecycleCallbacks
     {
         public MainApplication(IntPtr handle, JniHandleOwnership transer)
-          :base(handle, transer)
+        : base(handle, transer)
         {
         }
 
@@ -50,8 +50,6 @@ namespace WeldingMask.Droid
         public void OnActivitySaveInstanceState(Activity activity, Bundle outState)
         {
         }
-
-		
 
         public void OnActivityStarted(Activity activity)
         {

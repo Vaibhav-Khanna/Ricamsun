@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using WeldingMask.PageModels;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace WeldingMask.Pages
 {
@@ -9,10 +10,14 @@ namespace WeldingMask.Pages
     {
         private string _grey = "#d9d9d9";
         private string _green = "#7ed321";
+     
         public DisclaimerPage()
         {
             InitializeComponent();
-            NavigationPage.SetHasNavigationBar(this, false);
+
+            Xamarin.Forms.NavigationPage.SetHasNavigationBar(this, false);
+
+            On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
         }
 
         private void TermsConditions_Tapped(object sender, EventArgs e)

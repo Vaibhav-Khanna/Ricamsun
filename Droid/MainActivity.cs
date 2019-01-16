@@ -12,12 +12,19 @@ using WeldingMask.Droid.Renderers;
 using Android.Net;
 using System.Globalization;
 using System.IO;
+using Android.Speech;
+using Xamarin.Forms;
+using WeldingMask.Services;
 
 namespace WeldingMask.Droid
 {
     [Activity(Label = "RicamSun", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = false, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,ScreenOrientation = ScreenOrientation.Portrait)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity,Android.Media.MediaScannerConnection.IOnScanCompletedListener
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity,Android.Media.MediaScannerConnection.IOnScanCompletedListener, ISpeechToText
     {
+
+        private readonly int VOICE = 10;
+
+
         protected override void OnCreate(Bundle bundle)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
@@ -25,11 +32,38 @@ namespace WeldingMask.Droid
 
             base.OnCreate(bundle);
 
+            Window.AddFlags(WindowManagerFlags.KeepScreenOn);
+
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
             LoadApplication(new App());
         }
 
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+
+            if (requestCode == VOICE)
+            {
+                if (resultCode == Result.Ok)
+                {
+                    var matches = data.GetStringArrayListExtra(RecognizerIntent.ExtraResults);
+                   
+                    if (matches.Count != 0)
+                    {
+                        string textInput = matches[0];
+
+                        MessagingCenter.Send<ISpeechToText, string>(this, "STT", textInput);
+                    }
+                    else
+                    {
+                        MessagingCenter.Send<ISpeechToText, string>(this, "STT", "No input");
+                    }
+
+                }
+            }
+
+            base.OnActivityResult(requestCode, resultCode, data);
+        }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
@@ -86,5 +120,14 @@ namespace WeldingMask.Droid
             return Path.Combine(folder, nname);
         }
 
+        public void StartSpeechToText()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StopSpeechToText()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

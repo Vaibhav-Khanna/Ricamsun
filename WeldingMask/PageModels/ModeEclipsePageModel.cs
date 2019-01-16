@@ -1,15 +1,59 @@
 ﻿using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
+using Plugin.SpeechRecognition;
 using System;
+using System.Diagnostics;
 using System.Windows.Input;
 using WeldingMask.PageModels.Base;
+using WeldingMask.Pages;
+using WeldingMask.Services;
 using Xamarin.Forms;
 
 namespace WeldingMask.PageModels
 {
     public class ModeEclipsePageModel : BasePageModel
     {
-        
+
+        IDisposable listener;
+
+        public ModeEclipsePageModel()
+        {
+            listener = CrossSpeechRecognition.Current.ContinuousDictation().Subscribe(phrase =>
+            {
+                if (!string.IsNullOrWhiteSpace(phrase))
+                {
+                    if (phrase.ToLower() == "start")
+                    {
+                        ShieldOn = true;
+                    }
+                    else if (phrase.ToLower() == "stop")
+                    {
+                        ShieldOn = false;
+                    }
+                    else if (phrase.ToLower().Trim() == "bright")
+                    {
+                        ExposureValue += 10;
+
+                        if (exposurevalue > 100)
+                            ExposureValue = 100;
+
+                    }
+                    else if (phrase.ToLower().Trim() == "dark")
+                    {
+                        ExposureValue -= 10;
+
+                        if (exposurevalue < 0)
+                            ExposureValue = 0;
+
+                    }
+                    else if (phrase.ToLower().Trim() == "photo")
+                    {
+                        (this.CurrentPage as ModeEclipsePage)?.TakePhoto(null,null);
+                    }
+                }
+            });
+        } 
+
 
         public Command ShieldTap => new Command(() =>
        {
@@ -55,6 +99,18 @@ namespace WeldingMask.PageModels
 
                     ExposureValue = slidervalue;
                 }
+
+                RaisePropertyChanged();
+            }
+        }
+
+        private int zoomvalue = 0;
+        public int ZoomValue
+        {
+            get { return zoomvalue; }
+            set
+            {
+                zoomvalue = value;
 
                 RaisePropertyChanged();
             }
@@ -183,9 +239,15 @@ namespace WeldingMask.PageModels
         {
             base.ViewIsAppearing(sender, e);
 
-            ShieldOn = false; 
+            ShieldOn = false;
+
         }
 
+        protected override void ViewIsDisappearing(object sender, EventArgs e)
+        {
+            listener.Dispose();
 
+            base.ViewIsDisappearing(sender, e);
+        }
     }
 }

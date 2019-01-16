@@ -30,6 +30,7 @@ namespace WeldingMask.Droid
         {
             if (width == 0 || height == 0)
                 throw new ArgumentException("Size cannot be negative.");
+           
             mRatioWidth = width;
             mRatioHeight = height;
             RequestLayout();
@@ -40,7 +41,8 @@ namespace WeldingMask.Droid
             base.OnMeasure(widthMeasureSpec, heightMeasureSpec);
             int width = MeasureSpec.GetSize(widthMeasureSpec);
             int height = MeasureSpec.GetSize(heightMeasureSpec);
-            if (0 == mRatioWidth || 0 == mRatioHeight)
+           
+             if (0 == mRatioWidth || 0 == mRatioHeight)
             {
                 SetMeasuredDimension(width, height);
             }

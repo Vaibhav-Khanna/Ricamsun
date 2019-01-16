@@ -6,7 +6,8 @@
 
     
     <AbsoluteLayout x:Name="container" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-        <rend:CameraView BackgroundColor="Black" x:Name="cameraView" AbsoluteLayout.LayoutFlags="All" ExposureEnable="{Binding ShieldOn}" FocusEnable="{Binding ShieldOn}" FocusValue="{Binding FocusValue}" ExposureValue="{Binding ExposureValue}" AbsoluteLayout.LayoutBounds="0,0,1,1" >            
+        
+        <rend:CameraView BackgroundColor="Black" x:Name="cameraView" ZoomValue="{Binding ZoomValue}" AbsoluteLayout.LayoutFlags="All" ExposureEnable="{Binding ShieldOn}" FocusEnable="{Binding ShieldOn}" FocusValue="{Binding FocusValue}" ExposureValue="{Binding ExposureValue}" AbsoluteLayout.LayoutBounds="0,0,1,1" >            
         </rend:CameraView>
 
         
@@ -25,8 +26,17 @@
              </StackLayout.GestureRecognizers>
 
 
-
-            <Grid x:Name="controls" BackgroundColor="Black" Opacity="0.85" InputTransparent="false" Padding="0,20,0,0" VerticalOptions="EndAndExpand">
+             <StackLayout VerticalOptions="EndAndExpand" Orientation="Horizontal" Margin="10" Spacing="10" BackgroundColor="Transparent" >
+                
+                <Image Source="zoomOut.png" WidthRequest="30" HeightRequest="30" HorizontalOptions="Start" />
+                
+                <custom:CustomSlider x:Name="zoomSlider" Maximum="100" Minimum="0" Value="{Binding ZoomValue,Mode=TwoWay}" HorizontalOptions="FillAndExpand" />
+                
+                <Image Source="zoomIn.png" WidthRequest="30" HeightRequest="30" HorizontalOptions="End" />
+                
+            </StackLayout> 
+            
+            <Grid x:Name="controls" BackgroundColor="Black" Opacity="0.85" InputTransparent="false" Padding="0,20,0,0" VerticalOptions="End">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="18*" />
                     <ColumnDefinition Width="35*" />
@@ -46,22 +56,25 @@
                 </custom:CustomSlider>
                 <Label Text="+" IsVisible="{Binding EnableSlider}" Grid.Column="3" TextColor="#f8e71c" Grid.Row="0" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End" FontSize="20" Margin="0,0,15,0">
                 </Label>
-
-                <StackLayout Orientation="Vertical" Margin="0,12,0,0" Grid.Column="0" Grid.Row="1" Spacing="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                      <Image x:Name="ShieldButton" WidthRequest="35" HeightRequest="35" Style="{StaticResource ShieldButtonOn}" Aspect="AspectFit" VerticalOptions="End"/>
-                      <Label x:Name="ShieldLabel" Style="{StaticResource ShieldLabel}" TranslationY="-4"  VerticalOptions="Start"  Text="Start" />
+                
+                
+                <StackLayout Orientation="Vertical" Margin="0,0,0,0" Grid.Column="0" Grid.Row="1" Spacing="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                      
+                    <Image Source="btnphoto.png" WidthRequest="39" HeightRequest="39" Aspect="AspectFit" VerticalOptions="CenterAndExpand"/>
+                      
                 </StackLayout>
               
 
                 <BoxView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Column="0" Grid.Row="1" BackgroundColor="Transparent" >
                      <BoxView.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ShieldTap}"/>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TakePhoto" />
                     </BoxView.GestureRecognizers>
                 </BoxView>
-
-                <Image x:Name="CaptureButton" Grid.Row="1" Grid.Column="1" Style="{StaticResource CaptureButton}">
+                
+                
+                <Image x:Name="btnShield" Source="btnstop.png" HorizontalOptions="EndAndExpand" HeightRequest="66" WidthRequest="66" Grid.Row="1" Grid.Column="1"  >
                     <Image.GestureRecognizers>
-                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TakePhoto" />
+                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ShieldTap}" />
                     </Image.GestureRecognizers>
                 </Image>
 
@@ -81,9 +94,7 @@
                       <Image x:Name="ExposureButton" WidthRequest="28" HeightRequest="28"  Style="{StaticResource ExposureButtonOff}" Aspect="AspectFit"  VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand"/>
                      <Label x:Name="ExposureLabel" Style="{StaticResource LabelOff}" HorizontalOptions="Center"  VerticalOptions="StartAndExpand" Text="Brightness" />
                 </StackLayout>
-              
-                  
-          
+                                
                 <BoxView x:Name ="button2"   HorizontalOptions="FillAndExpand"  VerticalOptions="FillAndExpand" Grid.Row="1" Grid.Column="3" BackgroundColor="Transparent" >
                      <BoxView.GestureRecognizers>
                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ExposureTap}" />
