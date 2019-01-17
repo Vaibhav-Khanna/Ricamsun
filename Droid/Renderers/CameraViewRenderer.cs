@@ -176,7 +176,7 @@ namespace WeldingMask.Droid.Renderers
 
         void HandleZoom(double value)
         {
-            fragment?.AdjustZoom(value);
+            fragment?.AdjustZoom(Convert.ToInt32(value));
         }
 
         async void Delay()

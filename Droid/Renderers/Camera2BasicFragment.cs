@@ -123,6 +123,8 @@ namespace WeldingMask.Droid.Renderers
 
         long FrameDuration;
 
+        public int zoom_level = 1;
+
         // A {@link CameraCaptureSession.CaptureCallback} that handles events related to JPEG capture.
         public CameraCaptureListener mCaptureCallback;
 
@@ -705,16 +707,52 @@ namespace WeldingMask.Droid.Renderers
                        
         }
 
-        public void AdjustZoom(double value)
+        public void AdjustZoom(int value)
         {
-            //if (mPreviewRequestBuilder == null)
-                //return;
+            try
+            {
+                Activity activity = Activity;
 
-                //mPreviewRequestBuilder.Set(CameraCharacteristics., (int)ControlAFMode.Off);
+                CameraManager manager = (CameraManager)activity.GetSystemService(Context.CameraService);
+                CameraCharacteristics characteristics = manager.GetCameraCharacteristics(mCameraId);
 
-                //mCaptureSession?.SetRepeatingRequest(mPreviewRequest = mPreviewRequestBuilder.Build(), null, mBackgroundHandler);
+                float maxzoom = ((float)characteristics.Get(CameraCharacteristics.ScalerAvailableMaxDigitalZoom)) * 10;
 
+                Rect m = (Rect)characteristics.Get(CameraCharacteristics.SensorInfoActiveArraySize);
+
+                // Multi touch logic
+
+
+                double scaling = (double)(maxzoom) / (double)200;
+
+                zoom_level = Convert.ToInt32(value * scaling);
+
+                if (zoom_level == 0)
+                    zoom_level = 1;
+
+                int minW = (int)(m.Width() / maxzoom);
+                int minH = (int)(m.Height() / maxzoom);
+                int difW = m.Width() - minW;
+                int difH = m.Height() - minH;
+                int cropW = difW / 100 * (int)zoom_level;
+                int cropH = difH / 100 * (int)zoom_level;
+
+                cropW -= cropW & 3;
+
+                cropH -= cropH & 3;
+
+                Rect zoom = new Rect(cropW, cropH, m.Width() - cropW, m.Height() - cropH);
+
+                mPreviewRequestBuilder.Set(CaptureRequest.ScalerCropRegion, zoom);
+
+                mCaptureSession?.SetRepeatingRequest(mPreviewRequest = mPreviewRequestBuilder.Build(), null, mBackgroundHandler);
+            }
+            catch (System.Exception)
+            {
+
+            }
         }
+           
 
         public void AdjustExposure(int ExposureValue)
         {
