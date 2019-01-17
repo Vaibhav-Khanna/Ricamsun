@@ -170,6 +170,15 @@
     <BundleResource Include="Resources\shield%403x.png" />
     <BundleResource Include="Resources\zoomIn.png" />
     <BundleResource Include="Resources\zoomOut.png" />
+    <BundleResource Include="Resources\btnphoto.png" />
+    <BundleResource Include="Resources\btnphoto%402x.png" />
+    <BundleResource Include="Resources\btnphoto%403x.png" />
+    <BundleResource Include="Resources\btnstart.png" />
+    <BundleResource Include="Resources\btnstart%402x.png" />
+    <BundleResource Include="Resources\btnstart%403x.png" />
+    <BundleResource Include="Resources\btnstop.png" />
+    <BundleResource Include="Resources\btnstop%402x.png" />
+    <BundleResource Include="Resources\btnstop%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
