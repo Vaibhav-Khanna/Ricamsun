@@ -39,31 +39,7 @@ namespace WeldingMask.Droid
             LoadApplication(new App());
         }
 
-        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
-        {
-
-            if (requestCode == VOICE)
-            {
-                if (resultCode == Result.Ok)
-                {
-                    var matches = data.GetStringArrayListExtra(RecognizerIntent.ExtraResults);
-                   
-                    if (matches.Count != 0)
-                    {
-                        string textInput = matches[0];
-
-                        MessagingCenter.Send<ISpeechToText, string>(this, "STT", textInput);
-                    }
-                    else
-                    {
-                        MessagingCenter.Send<ISpeechToText, string>(this, "STT", "No input");
-                    }
-
-                }
-            }
-
-            base.OnActivityResult(requestCode, resultCode, data);
-        }
+     
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

@@ -87,10 +87,10 @@
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
     <Reference Include="FreshIOC">
-      <HintPath>..\packages\FreshMvvm.2.2.0\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\FreshIOC.dll</HintPath>
+      <HintPath>..\packages\FreshMvvm.2.2.4\lib\netstandard1.0\FreshIOC.dll</HintPath>
     </Reference>
     <Reference Include="FreshMvvm">
-      <HintPath>..\packages\FreshMvvm.2.2.0\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\FreshMvvm.dll</HintPath>
+      <HintPath>..\packages\FreshMvvm.2.2.4\lib\netstandard1.0\FreshMvvm.dll</HintPath>
     </Reference>
     <Reference Include="MaterialControls">
       <HintPath>..\packages\MaterialControls.1.2.2\lib\Xamarin.iOS10\MaterialControls.dll</HintPath>
