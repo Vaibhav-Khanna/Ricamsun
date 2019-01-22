@@ -67,6 +67,7 @@ namespace WeldingMask.PageModels
                 else
                     SpeechText = "Getting ready...";
             });
+
         } 
 
 
@@ -259,10 +260,7 @@ namespace WeldingMask.PageModels
             base.ViewIsAppearing(sender, e);
 
             ShieldOn = false;
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/uat
         }
 
         protected override void ViewIsDisappearing(object sender, EventArgs e)

@@ -230,7 +230,6 @@ namespace WeldingMask.PageModels
             ShieldOn = false;
         }
 
-<<<<<<< HEAD
         protected override void ViewIsDisappearing(object sender, EventArgs e)
         {
             base.ViewIsDisappearing(sender, e);
@@ -239,7 +238,5 @@ namespace WeldingMask.PageModels
             an.Dispose();
         }
 
-=======
->>>>>>> origin/uat
     }
 }
