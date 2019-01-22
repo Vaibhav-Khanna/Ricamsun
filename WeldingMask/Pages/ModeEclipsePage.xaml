@@ -19,13 +19,11 @@
                     <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CancelCommand}" />
                 </ContentView.GestureRecognizers>
             </ContentView>
-
             
-             <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped" />
-             </StackLayout.GestureRecognizers>
-
-
+            
+            <Label Text="{Binding SpeechText,Mode=OneWay}" TranslationY="-40" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontSize="15" TextColor="White" Opacity="0.8" VerticalOptions="Start" />
+            
+            
              <StackLayout VerticalOptions="EndAndExpand" Orientation="Horizontal" Margin="10" Spacing="10" BackgroundColor="Transparent" >
                 
                 <Image Source="zoomOut.png" WidthRequest="30" HeightRequest="30" HorizontalOptions="Start" />
