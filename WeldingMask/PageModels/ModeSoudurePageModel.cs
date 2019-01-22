@@ -10,6 +10,7 @@ namespace WeldingMask.PageModels
     {
 
         IDisposable listener;
+        IDisposable an;
 
         public ModeSoudurePageModel()
         {
@@ -28,21 +29,32 @@ namespace WeldingMask.PageModels
                     }
                     else if (phrase.ToLower().Trim() == "bright")
                     {
-                        ExposureValue += 10;
+                        exposurevalue += 25;
+
+                        RaisePropertyChanged("ExposureValue");
 
                         if (exposurevalue > 100)
                             ExposureValue = 100;
-
                     }
                     else if (phrase.ToLower().Trim() == "dark")
                     {
-                        ExposureValue -= 10;
+                        exposurevalue -= 25;
+
+                        RaisePropertyChanged("ExposureValue");
 
                         if (exposurevalue < 0)
                             ExposureValue = 0;
 
                     }
                 }
+            });
+
+            an = CrossSpeechRecognition.Current.WhenListeningStatusChanged().Subscribe(isListening =>
+            {
+                if (isListening)
+                    SpeechText = "Listening...";
+                else
+                    SpeechText = "Getting ready...";
             });
         }
 
@@ -62,6 +74,10 @@ namespace WeldingMask.PageModels
             if (ShieldOn)
             ExposureOn = !ExposureOn;
         });
+
+
+        string _speechtext = "Listening...";
+        public string SpeechText { get { return _speechtext; } set { value = _speechtext; RaisePropertyChanged(); } }
 
 
         private int slidervalue;
@@ -109,7 +125,7 @@ namespace WeldingMask.PageModels
             }
         }
 
-        private int exposurevalue = 80;
+        private int exposurevalue = 25;
         public int ExposureValue
         {
             get { return exposurevalue; }
@@ -219,6 +235,7 @@ namespace WeldingMask.PageModels
             base.ViewIsDisappearing(sender, e);
 
             listener.Dispose();
+            an.Dispose();
         }
 
     }

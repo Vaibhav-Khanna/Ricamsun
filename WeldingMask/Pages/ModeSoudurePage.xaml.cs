@@ -94,18 +94,18 @@ namespace WeldingMask.Pages
 
         void Handle_Tapped(object sender, System.EventArgs e)
         {
-            if (PageContent.BackgroundColor == Color.Transparent)
-            {
-                PageContent.BackgroundColor = Color.White;
-                PageContent.Opacity = 0.9;
-                controls.IsVisible = false;
-            }
-            else
-            {
-                PageContent.BackgroundColor = Color.Transparent;
-                PageContent.Opacity = 1;
-                controls.IsVisible = true;
-            }
+            //if (PageContent.BackgroundColor == Color.Transparent)
+            //{
+            //    PageContent.BackgroundColor = Color.White;
+            //    PageContent.Opacity = 0.9;
+            //    controls.IsVisible = false;
+            //}
+            //else
+            //{
+            //    PageContent.BackgroundColor = Color.Transparent;
+            //    PageContent.Opacity = 1;
+            //    controls.IsVisible = true;
+            //}
         }
 
         void Handle_Tapped1(object sender, System.EventArgs e)

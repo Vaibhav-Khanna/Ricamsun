@@ -16,6 +16,11 @@ namespace WeldingMask.iOS
 
             LoadApplication(new App());
 
+            InvokeOnMainThread(() =>
+            {
+                UIApplication.SharedApplication.IdleTimerDisabled = true;
+            });
+
             return base.FinishedLaunching(app, options);
         }
 

@@ -15,6 +15,7 @@ namespace WeldingMask.PageModels
     {
 
         IDisposable listener;
+        IDisposable an;
 
         public ModeEclipsePageModel()
         {
@@ -22,6 +23,7 @@ namespace WeldingMask.PageModels
             {
                 if (!string.IsNullOrWhiteSpace(phrase))
                 {
+                
                     if (phrase.ToLower() == "start")
                     {
                         ShieldOn = true;
@@ -32,15 +34,18 @@ namespace WeldingMask.PageModels
                     }
                     else if (phrase.ToLower().Trim() == "bright")
                     {
-                        ExposureValue += 10;
+                        exposurevalue += 25;
+
+                        RaisePropertyChanged("ExposureValue");
 
                         if (exposurevalue > 100)
                             ExposureValue = 100;
-
                     }
                     else if (phrase.ToLower().Trim() == "dark")
                     {
-                        ExposureValue -= 10;
+                        exposurevalue -= 25;
+
+                        RaisePropertyChanged("ExposureValue");
 
                         if (exposurevalue < 0)
                             ExposureValue = 0;
@@ -48,9 +53,18 @@ namespace WeldingMask.PageModels
                     }
                     else if (phrase.ToLower().Trim() == "photo")
                     {
-                        (this.CurrentPage as ModeEclipsePage)?.TakePhoto(null,null);
+                        (this.CurrentPage as ModeEclipsePage)?.TakePhoto(null, null);
                     }
+                   
                 }
+            });
+
+            an = CrossSpeechRecognition.Current.WhenListeningStatusChanged().Subscribe(isListening =>
+            {
+                if (isListening)
+                    SpeechText = "Listening...";
+                else
+                    SpeechText = "Getting ready...";
             });
         } 
 
@@ -71,6 +85,9 @@ namespace WeldingMask.PageModels
             if (ShieldOn)
             ExposureOn = !ExposureOn;
         });
+
+        string _speechtext = "Listening...";
+        public string SpeechText { get { return _speechtext; } set { value = _speechtext; RaisePropertyChanged(); } }
 
 
         private int slidervalue;
@@ -138,7 +155,7 @@ namespace WeldingMask.PageModels
             }
         }
 
-        private int exposurevalue = 80;
+        private int exposurevalue = 25;
         public int ExposureValue
         {
             get { return exposurevalue; }
@@ -246,6 +263,7 @@ namespace WeldingMask.PageModels
         protected override void ViewIsDisappearing(object sender, EventArgs e)
         {
             listener.Dispose();
+            an.Dispose();
 
             base.ViewIsDisappearing(sender, e);
         }
