@@ -14,6 +14,7 @@ namespace WeldingMask.PageModels
     public class ModeEclipsePageModel : BasePageModel
     {
 
+
         IDisposable listener;
         IDisposable an;
 
@@ -69,21 +70,22 @@ namespace WeldingMask.PageModels
         } 
 
 
+
         public Command ShieldTap => new Command(() =>
        {
-            ShieldOn = !ShieldOn;
+           ShieldOn = !ShieldOn;
        });
 
         public Command FocusTap => new Command(() =>
         {
-            if(ShieldOn)
-            FocusOn = !FocusOn;
+            if (ShieldOn)
+                FocusOn = !FocusOn;
         });
 
         public Command ExposureTap => new Command(() =>
         {
             if (ShieldOn)
-            ExposureOn = !ExposureOn;
+                ExposureOn = !ExposureOn;
         });
 
         string _speechtext = "Listening...";
@@ -102,7 +104,7 @@ namespace WeldingMask.PageModels
                 {
                     FocusValue = slidervalue;
                 }
-                else if(ExposureOn)
+                else if (ExposureOn)
                 {
                     //if (slidervalue >= 50)
                     //{
@@ -257,7 +259,10 @@ namespace WeldingMask.PageModels
             base.ViewIsAppearing(sender, e);
 
             ShieldOn = false;
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/uat
         }
 
         protected override void ViewIsDisappearing(object sender, EventArgs e)
