@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace WeldingMask.PageModels
 {
-    public class ModeSoudurePageModel: BasePageModel
+    public class ModeSoudurePageModel : BasePageModel
     {
 
         IDisposable listener;
@@ -66,13 +66,13 @@ namespace WeldingMask.PageModels
         public Command FocusTap => new Command(() =>
         {
             if (ShieldOn)
-            FocusOn = !FocusOn;
+                FocusOn = !FocusOn;
         });
 
         public Command ExposureTap => new Command(() =>
         {
             if (ShieldOn)
-            ExposureOn = !ExposureOn;
+                ExposureOn = !ExposureOn;
         });
 
 
@@ -230,6 +230,7 @@ namespace WeldingMask.PageModels
             ShieldOn = false;
         }
 
+<<<<<<< HEAD
         protected override void ViewIsDisappearing(object sender, EventArgs e)
         {
             base.ViewIsDisappearing(sender, e);
@@ -238,5 +239,7 @@ namespace WeldingMask.PageModels
             an.Dispose();
         }
 
+=======
+>>>>>>> origin/uat
     }
 }
