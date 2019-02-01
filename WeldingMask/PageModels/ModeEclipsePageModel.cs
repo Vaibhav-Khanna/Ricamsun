@@ -14,68 +14,79 @@ namespace WeldingMask.PageModels
     public class ModeEclipsePageModel : BasePageModel
     {
 
-
         IDisposable listener;
         IDisposable an;
+        bool IsVisible = true;
 
         public ModeEclipsePageModel()
         {
-            listener = CrossSpeechRecognition.Current.ContinuousDictation().Subscribe(phrase =>
-            {
-                if (!string.IsNullOrWhiteSpace(phrase))
-                {
-                
-                    if (phrase.ToLower() == "start")
-                    {
-                        ShieldOn = true;
-                    }
-                    else if (phrase.ToLower() == "stop")
-                    {
-                        ShieldOn = false;
-                    }
-                    else if (phrase.ToLower().Trim() == "bright")
-                    {
-                        exposurevalue += 25;
-
-                        RaisePropertyChanged("ExposureValue");
-
-                        if (exposurevalue > 100)
-                            ExposureValue = 100;
-                    }
-                    else if (phrase.ToLower().Trim() == "dark")
-                    {
-                        exposurevalue -= 25;
-
-                        RaisePropertyChanged("ExposureValue");
-
-                        if (exposurevalue < 0)
-                            ExposureValue = 0;
-
-                    }
-                    else if (phrase.ToLower().Trim() == "photo")
-                    {
-                        (this.CurrentPage as ModeEclipsePage)?.TakePhoto(null, null);
-                    }
-                   
-                }
-            });
+            if (Device.RuntimePlatform == Device.iOS && CrossSpeechRecognition.Current.IsSupported)
+                listener = CrossSpeechRecognition.Current.ListenUntilPause().Subscribe(phrase => ExecuteVoiceCommand(phrase));
+            else if (CrossSpeechRecognition.Current.IsSupported)
+                listener = CrossSpeechRecognition.Current.ContinuousDictation().Subscribe(phrase => ExecuteVoiceCommand(phrase));
 
             an = CrossSpeechRecognition.Current.WhenListeningStatusChanged().Subscribe(isListening =>
             {
                 if (isListening)
                     SpeechText = "Listening...";
                 else
+                {
                     SpeechText = "Getting ready...";
+
+                    if (IsVisible)
+                    {
+                        if (Device.RuntimePlatform == Device.iOS && CrossSpeechRecognition.Current.IsSupported)
+                            listener = CrossSpeechRecognition.Current.ListenUntilPause().Subscribe(phrase => ExecuteVoiceCommand(phrase));
+                    }
+                }
             });
+        }
 
-        } 
+        void ExecuteVoiceCommand(string phrase)
+        {
+            if (!string.IsNullOrWhiteSpace(phrase))
+            {
+                SpeechText = $"''{phrase}''";
 
+                if (phrase.ToLower() == "start")
+                {
+                    ShieldOn = true;
+                }
+                else if (phrase.ToLower() == "stop")
+                {
+                    ShieldOn = false;
+                }
+                else if (phrase.ToLower().Trim() == "bright")
+                {
+                    exposurevalue += 25;
+
+                    RaisePropertyChanged("ExposureValue");
+
+                    if (exposurevalue > 100)
+                        ExposureValue = 100;
+                }
+                else if (phrase.ToLower().Trim() == "dark")
+                {
+                    exposurevalue -= 25;
+
+                    RaisePropertyChanged("ExposureValue");
+
+                    if (exposurevalue < 0)
+                        ExposureValue = 0;
+                }
+                else if (phrase.ToLower().Trim() == "photo")
+                {
+                    (this.CurrentPage as ModeEclipsePage)?.TakePhoto(null, null);
+                }
+            }
+        }
 
 
         public Command ShieldTap => new Command(() =>
        {
            ShieldOn = !ShieldOn;
        });
+
 
         public Command FocusTap => new Command(() =>
         {
@@ -90,7 +101,7 @@ namespace WeldingMask.PageModels
         });
 
         string _speechtext = "Listening...";
-        public string SpeechText { get { return _speechtext; } set { value = _speechtext; RaisePropertyChanged(); } }
+        public string SpeechText { get { return _speechtext; } set { _speechtext = value; RaisePropertyChanged(); } }
 
 
         private int slidervalue;
@@ -260,13 +271,13 @@ namespace WeldingMask.PageModels
             base.ViewIsAppearing(sender, e);
 
             ShieldOn = false;
-
         }
 
         protected override void ViewIsDisappearing(object sender, EventArgs e)
         {
-            listener.Dispose();
-            an.Dispose();
+            IsVisible = false;
+            listener?.Dispose();
+            an?.Dispose();
 
             base.ViewIsDisappearing(sender, e);
         }
