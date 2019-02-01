@@ -11,51 +11,67 @@ namespace WeldingMask.PageModels
 
         IDisposable listener;
         IDisposable an;
+        bool IsVisible = true;
 
         public ModeSoudurePageModel()
         {
+            if (Device.RuntimePlatform == Device.iOS && CrossSpeechRecognition.Current.IsSupported)
+                listener = CrossSpeechRecognition.Current.ListenUntilPause().Subscribe(phrase => ExecuteVoiceCommand(phrase));
+            else if (CrossSpeechRecognition.Current.IsSupported)
+                listener = CrossSpeechRecognition.Current.ContinuousDictation().Subscribe(phrase => ExecuteVoiceCommand(phrase));
 
-            listener = CrossSpeechRecognition.Current.ContinuousDictation().Subscribe(phrase =>
-            {
-                if (!string.IsNullOrWhiteSpace(phrase))
-                {
-                    if (phrase.ToLower() == "start")
-                    {
-                        ShieldOn = true;
-                    }
-                    else if (phrase.ToLower() == "stop")
-                    {
-                        ShieldOn = false;
-                    }
-                    else if (phrase.ToLower().Trim() == "bright")
-                    {
-                        exposurevalue += 25;
-
-                        RaisePropertyChanged("ExposureValue");
-
-                        if (exposurevalue > 100)
-                            ExposureValue = 100;
-                    }
-                    else if (phrase.ToLower().Trim() == "dark")
-                    {
-                        exposurevalue -= 25;
-
-                        RaisePropertyChanged("ExposureValue");
-
-                        if (exposurevalue < 0)
-                            ExposureValue = 0;
-
-                    }
-                }
-            });
 
             an = CrossSpeechRecognition.Current.WhenListeningStatusChanged().Subscribe(isListening =>
             {
                 if (isListening)
                     SpeechText = "Listening...";
                 else
+                {
                     SpeechText = "Getting ready...";
+
+                    if (IsVisible)
+                    {
+                        if (Device.RuntimePlatform == Device.iOS && CrossSpeechRecognition.Current.IsSupported)
+                            listener = CrossSpeechRecognition.Current.ListenUntilPause().Subscribe(phrase => ExecuteVoiceCommand(phrase));
+                    }
+                }
             });
+        }
+
+        void ExecuteVoiceCommand(string phrase)
+        {
+            if (!string.IsNullOrWhiteSpace(phrase))
+            {
+                SpeechText = $"''{phrase}''";
+
+                if (phrase.ToLower() == "start")
+                {
+                    ShieldOn = true;
+                }
+                else if (phrase.ToLower() == "stop")
+                {
+                    ShieldOn = false;
+                }
+                else if (phrase.ToLower().Trim() == "bright")
+                {
+                    exposurevalue += 25;
+
+                    RaisePropertyChanged("ExposureValue");
+
+                    if (exposurevalue > 100)
+                        ExposureValue = 100;
+                }
+                else if (phrase.ToLower().Trim() == "dark")
+                {
+                    exposurevalue -= 25;
+
+                    RaisePropertyChanged("ExposureValue");
+
+                    if (exposurevalue < 0)
+                        ExposureValue = 0;
+                }
+
+            }
         }
 
         public Command ShieldTap => new Command(() =>
@@ -75,10 +91,8 @@ namespace WeldingMask.PageModels
                 ExposureOn = !ExposureOn;
         });
 
-
         string _speechtext = "Listening...";
-        public string SpeechText { get { return _speechtext; } set { value = _speechtext; RaisePropertyChanged(); } }
-
+        public string SpeechText { get { return _speechtext; } set { _speechtext = value; RaisePropertyChanged(); } }
 
         private int slidervalue;
         public int SliderValue
@@ -232,10 +246,11 @@ namespace WeldingMask.PageModels
 
         protected override void ViewIsDisappearing(object sender, EventArgs e)
         {
-            base.ViewIsDisappearing(sender, e);
+            IsVisible = false;
+            listener?.Dispose();
+            an?.Dispose();
 
-            listener.Dispose();
-            an.Dispose();
+            base.ViewIsDisappearing(sender, e);
         }
 
     }
