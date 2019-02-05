@@ -119,6 +119,9 @@
     <Reference Include="Plugin.SpeechRecognition">
       <HintPath>..\packages\Plugin.SpeechRecognition.1.0.0\lib\xamarinios10\Plugin.SpeechRecognition.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.Essentials">
+      <HintPath>..\packages\Xamarin.Essentials.1.0.1\lib\xamarinios10\Xamarin.Essentials.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WeldingMask\WeldingMask.csproj">

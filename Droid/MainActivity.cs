@@ -32,6 +32,8 @@ namespace WeldingMask.Droid
 
             base.OnCreate(bundle);
 
+            Xamarin.Essentials.Platform.Init(this, bundle);
+
             Window.AddFlags(WindowManagerFlags.KeepScreenOn);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
@@ -39,12 +41,15 @@ namespace WeldingMask.Droid
             LoadApplication(new App());
         }
 
-     
+       
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
+            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+           
+             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
         public void OnScanCompleted(string path, Android.Net.Uri uri)

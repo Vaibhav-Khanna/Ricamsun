@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Plugin.SpeechRecognition;
 using WeldingMask.PageModels.Base;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WeldingMask.PageModels
@@ -15,61 +16,83 @@ namespace WeldingMask.PageModels
 
         public ModeSoudurePageModel()
         {
-            if (Device.RuntimePlatform == Device.iOS && CrossSpeechRecognition.Current.IsSupported)
-                listener = CrossSpeechRecognition.Current.ListenUntilPause().Subscribe(phrase => ExecuteVoiceCommand(phrase));
-            else if (CrossSpeechRecognition.Current.IsSupported)
-                listener = CrossSpeechRecognition.Current.ContinuousDictation().Subscribe(phrase => ExecuteVoiceCommand(phrase));
-
-
-            an = CrossSpeechRecognition.Current.WhenListeningStatusChanged().Subscribe(isListening =>
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-                if (isListening)
-                    SpeechText = "Listening...";
-                else
+                try
                 {
-                    SpeechText = "Getting ready...";
+                    if (Device.RuntimePlatform == Device.iOS && CrossSpeechRecognition.Current.IsSupported)
+                        listener = CrossSpeechRecognition.Current.ListenUntilPause().Subscribe(phrase => ExecuteVoiceCommand(phrase));
+                    else if (CrossSpeechRecognition.Current.IsSupported)
+                        listener = CrossSpeechRecognition.Current.ContinuousDictation().Subscribe(phrase => ExecuteVoiceCommand(phrase));
 
-                    if (IsVisible)
+
+                    an = CrossSpeechRecognition.Current.WhenListeningStatusChanged().Subscribe(isListening =>
                     {
-                        if (Device.RuntimePlatform == Device.iOS && CrossSpeechRecognition.Current.IsSupported)
-                            listener = CrossSpeechRecognition.Current.ListenUntilPause().Subscribe(phrase => ExecuteVoiceCommand(phrase));
-                    }
+                        if (isListening)
+                            SpeechText = "Listening...";
+                        else
+                        {
+                            SpeechText = "Getting ready...";
+
+                            if (IsVisible)
+                            {
+                                if (Device.RuntimePlatform == Device.iOS && CrossSpeechRecognition.Current.IsSupported)
+                                {
+                                    listener?.Dispose();
+
+                                    listener = CrossSpeechRecognition.Current.ListenUntilPause().Subscribe(phrase => ExecuteVoiceCommand(phrase));
+                                }
+                            }
+                        }
+                    });
                 }
-            });
+                catch (Exception ex)
+                {
+
+                }
+
+            }
         }
 
         void ExecuteVoiceCommand(string phrase)
         {
-            if (!string.IsNullOrWhiteSpace(phrase))
+            try
             {
-                SpeechText = $"''{phrase}''";
-
-                if (phrase.ToLower() == "start")
+                if (!string.IsNullOrWhiteSpace(phrase))
                 {
-                    ShieldOn = true;
-                }
-                else if (phrase.ToLower() == "stop")
-                {
-                    ShieldOn = false;
-                }
-                else if (phrase.ToLower().Trim() == "bright")
-                {
-                    exposurevalue += 25;
+                    SpeechText = $"''{phrase}''";
 
-                    RaisePropertyChanged("ExposureValue");
+                    if (phrase.ToLower() == "start")
+                    {
+                        ShieldOn = true;
+                    }
+                    else if (phrase.ToLower() == "stop")
+                    {
+                        ShieldOn = false;
+                    }
+                    else if (phrase.ToLower().Trim() == "bright")
+                    {
+                        exposurevalue += 25;
 
-                    if (exposurevalue > 100)
-                        ExposureValue = 100;
+                        RaisePropertyChanged("ExposureValue");
+
+                        if (exposurevalue > 100)
+                            ExposureValue = 100;
+                    }
+                    else if (phrase.ToLower().Trim() == "dark")
+                    {
+                        exposurevalue -= 25;
+
+                        RaisePropertyChanged("ExposureValue");
+
+                        if (exposurevalue < 0)
+                            ExposureValue = 0;
+                    }
+
                 }
-                else if (phrase.ToLower().Trim() == "dark")
-                {
-                    exposurevalue -= 25;
-
-                    RaisePropertyChanged("ExposureValue");
-
-                    if (exposurevalue < 0)
-                        ExposureValue = 0;
-                }
+            }
+            catch (Exception ex)
+            {
 
             }
         }
