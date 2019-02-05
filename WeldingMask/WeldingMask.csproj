@@ -44,6 +44,7 @@
 
 
   <PackageReference Include="Plugin.SpeechRecognition" Version="1.0.0" />
+  <PackageReference Include="Xamarin.Essentials" Version="1.0.1" />
   </ItemGroup>
 
 </Project>

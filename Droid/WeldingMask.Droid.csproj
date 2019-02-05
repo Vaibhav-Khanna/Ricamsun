@@ -195,6 +195,14 @@
     <Reference Include="Plugin.SpeechRecognition">
       <HintPath>..\packages\Plugin.SpeechRecognition.1.0.0\lib\monoandroid80\Plugin.SpeechRecognition.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.Android.Support.CustomTabs">
+      <HintPath>..\packages\Xamarin.Android.Support.CustomTabs.28.0.0\lib\monoandroid90\Xamarin.Android.Support.CustomTabs.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Essentials">
+      <HintPath>..\packages\Xamarin.Essentials.1.0.1\lib\monoandroid81\Xamarin.Essentials.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WeldingMask\WeldingMask.csproj">
@@ -479,4 +487,5 @@
   <Import Project="..\packages\Xamarin.Android.Support.Design.28.0.0\build\monoandroid90\Xamarin.Android.Support.Design.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Design.28.0.0\build\monoandroid90\Xamarin.Android.Support.Design.targets')" />
   <Import Project="..\packages\Xamarin.Android.Support.v7.MediaRouter.28.0.0\build\monoandroid90\Xamarin.Android.Support.v7.MediaRouter.targets" Condition="Exists('..\packages\Xamarin.Android.Support.v7.MediaRouter.28.0.0\build\monoandroid90\Xamarin.Android.Support.v7.MediaRouter.targets')" />
 
+  <Import Project="..\packages\Xamarin.Android.Support.CustomTabs.28.0.0\build\monoandroid90\Xamarin.Android.Support.CustomTabs.targets" Condition="Exists('..\packages\Xamarin.Android.Support.CustomTabs.28.0.0\build\monoandroid90\Xamarin.Android.Support.CustomTabs.targets')" />
 </Project>
