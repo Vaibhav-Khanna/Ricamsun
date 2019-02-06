@@ -9,6 +9,7 @@ using WeldingMask.Pages;
 using WeldingMask.Services;
 using Xamarin.Forms;
 using Xamarin.Essentials;
+using System.Threading.Tasks;
 
 namespace WeldingMask.PageModels
 {
@@ -23,40 +24,54 @@ namespace WeldingMask.PageModels
         {
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-                try
+
+                if (Device.RuntimePlatform == Device.iOS && CrossSpeechRecognition.Current.IsSupported)
+                    listener = CrossSpeechRecognition.Current.ListenUntilPause().Subscribe(ExecuteVoiceCommand, OnError);
+                else if (CrossSpeechRecognition.Current.IsSupported)
+                    listener = CrossSpeechRecognition.Current.ContinuousDictation().Subscribe(ExecuteVoiceCommand, OnError);
+
+
+                an = CrossSpeechRecognition.Current.WhenListeningStatusChanged().Subscribe(async isListening =>
                 {
-                    if (Device.RuntimePlatform == Device.iOS && CrossSpeechRecognition.Current.IsSupported)
-                        listener = CrossSpeechRecognition.Current.ListenUntilPause().Subscribe(phrase => ExecuteVoiceCommand(phrase));
-                    else if (CrossSpeechRecognition.Current.IsSupported)
-                        listener = CrossSpeechRecognition.Current.ContinuousDictation().Subscribe(phrase => ExecuteVoiceCommand(phrase));
-
-
-                    an = CrossSpeechRecognition.Current.WhenListeningStatusChanged().Subscribe(isListening =>
+                    if (isListening)
                     {
-                        if (isListening)
-                            SpeechText = "Listening...";
-                        else
+                        SpeechText = "Listening...";
+
+                    }
+                    else
+                    {
+                        SpeechText = "Getting ready...";
+
+                        if (IsVisible)
                         {
-                            SpeechText = "Getting ready...";
+                            listener?.Dispose();
 
-                            if (IsVisible)
+                            await Task.Delay(2000);
+
+                            if (Device.RuntimePlatform == Device.iOS && CrossSpeechRecognition.Current.IsSupported)
                             {
-                                if (Device.RuntimePlatform == Device.iOS && CrossSpeechRecognition.Current.IsSupported)
+                                Device.BeginInvokeOnMainThread(() =>
                                 {
-                                    listener?.Dispose();
-
-                                    listener = CrossSpeechRecognition.Current.ListenUntilPause().Subscribe(phrase => ExecuteVoiceCommand(phrase));
-                                }
+                                    listener = CrossSpeechRecognition.Current.ListenUntilPause().Subscribe(ExecuteVoiceCommand, OnError);
+                                });
+                            }
+                            else
+                            {
+                                Device.BeginInvokeOnMainThread(() =>
+                                {
+                                    listener = CrossSpeechRecognition.Current.ContinuousDictation().Subscribe(ExecuteVoiceCommand, OnError);
+                                });
                             }
                         }
-                    });
-                }
-                catch (Exception ex)
-                {
+                    }
 
-                }
-
+                });
             }
+        }
+
+        private void OnError(Exception ex)
+        {
+
         }
 
         void ExecuteVoiceCommand(string phrase)
