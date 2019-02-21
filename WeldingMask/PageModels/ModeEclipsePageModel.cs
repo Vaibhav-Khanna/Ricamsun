@@ -84,7 +84,7 @@ namespace WeldingMask.PageModels
                 {
                     SpeechText = $"''{phrase}''";
 
-                    if (phrase.ToLower() == "start")
+                    if (phrase.ToLower() == "go")
                     {
                         ShieldOn = true;
                     }
