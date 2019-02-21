@@ -104,7 +104,7 @@ namespace WeldingMask.PageModels
                         if (exposurevalue < 0)
                             ExposureValue = 0;
                     }
-
+                    //
                 }
             }
             catch (Exception ex)
