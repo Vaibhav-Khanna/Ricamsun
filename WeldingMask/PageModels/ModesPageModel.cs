@@ -39,6 +39,11 @@ namespace WeldingMask.PageModels
             }
         }
 
+        public Command VoiceCommand => new Command(async() =>
+        {
+           await CoreMethods.PushPageModel<VoiceCommandPageModel>();
+        });
+
         public ICommand EclipseCommand
         {
             get

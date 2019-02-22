@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="WeldingMask.Pages.ModesPage" BackgroundColor="Black">
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="WeldingMask.Pages.ModesPage" 
+    BackgroundColor="Black"
+    >
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="TitleLabelStyle" TargetType="Label">
@@ -45,12 +50,16 @@
         </Grid>
        <ScrollView VerticalOptions="FillAndExpand" Orientation="Vertical">
             <StackLayout VerticalOptions="FillAndExpand">
+                
                 <Grid RowSpacing="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="35" />
                         <RowDefinition Height="1" />
                         <RowDefinition Height="54" />
                         <RowDefinition Height="1" />
+                        <RowDefinition Height="54" />
+                        <RowDefinition Height="1" />
+                        <RowDefinition Height="15" />
                         <RowDefinition Height="54" />
                         <RowDefinition Height="1" />
                         <RowDefinition Height="15" />
@@ -79,6 +88,7 @@
                     </Grid>
                     <BoxView Grid.Row="3" Style="{StaticResource SeperatorStyle}">
                     </BoxView>
+                    
                     <Grid Grid.Row="4" BackgroundColor="#181818">
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding EclipseCommand}" />
@@ -94,12 +104,35 @@
                         </Label>
                         <Image Grid.Column="2" Source="arrow.png" Margin="14"></Image>
                     </Grid>
+                    
                     <BoxView Grid.Row="5" Style="{StaticResource SeperatorStyle}">
                     </BoxView>
-                    <BoxView Grid.Row="7" Style="{StaticResource SeperatorStyle}">
+                    
+                     <Grid Grid.Row="7" BackgroundColor="#181818">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding VoiceCommand}" />
+                        </Grid.GestureRecognizers>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="15*" />
+                            <ColumnDefinition Width="75*" />
+                            <ColumnDefinition Width="10*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="mic.png" Margin="15">
+                        </Image>
+                        <Label Grid.Column="1" Text="Aide commande vocale" Style="{StaticResource SectionTitleLabelStyle}">
+                        </Label>
+                        <Image Grid.Column="2" Source="arrow.png" Margin="14"></Image>
+                    </Grid>
+                    
+                    <BoxView Grid.Row="8" Style="{StaticResource SeperatorStyle}">
                     </BoxView>
                     
-                    <Grid Grid.Row="8" BackgroundColor="#181818" >
+                    
+                    
+                    <BoxView Grid.Row="10" Style="{StaticResource SeperatorStyle}">
+                    </BoxView>
+                    
+                    <Grid Grid.Row="11" BackgroundColor="#181818" >
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ContinueCommand}" />
                         </Grid.GestureRecognizers>
@@ -112,13 +145,17 @@
                         <Image Grid.Column="1" Source="arrow.png" Margin="15"></Image>
                     </Grid>
                     
-                    <BoxView Grid.Row="9" Style="{StaticResource SeperatorStyle}">
+                    <BoxView Grid.Row="12" Style="{StaticResource SeperatorStyle}">
                     </BoxView>
+                    
                 </Grid>
+                
                 <Image Source="splash.png" HorizontalOptions="FillAndExpand" HeightRequest="280" Aspect="AspectFit" VerticalOptions="EndAndExpand">
                 </Image>
+                
                 <Label x:Name="date" VerticalOptions="End" Margin="0,0,0,20" Style="{StaticResource CopyRightsStyle}">
                 </Label>
+                
             </StackLayout>
       </ScrollView>
     </StackLayout>

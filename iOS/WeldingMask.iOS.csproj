@@ -183,6 +183,15 @@
     <BundleResource Include="Resources\btnstop.png" />
     <BundleResource Include="Resources\btnstop%402x.png" />
     <BundleResource Include="Resources\btnstop%403x.png" />
+    <BundleResource Include="Resources\mic.png" />
+    <BundleResource Include="Resources\mic%402x.png" />
+    <BundleResource Include="Resources\mic%403x.png" />
+    <BundleResource Include="Resources\imgfiltergostop_fr%402x.png" />
+    <BundleResource Include="Resources\imgfiltergostop_fr%403x.png" />
+    <BundleResource Include="Resources\imgfiltergostop_fr.png" />
+    <BundleResource Include="Resources\imgvoicecommand.png" />
+    <BundleResource Include="Resources\imgvoicecommand%402x.png" />
+    <BundleResource Include="Resources\imgvoicecommand%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
