@@ -129,10 +129,10 @@
                     
                     
                     
-                    <BoxView Grid.Row="10" Style="{StaticResource SeperatorStyle}">
+                    <BoxView Grid.Row="10" IsVisible="false" Style="{StaticResource SeperatorStyle}">
                     </BoxView>
                     
-                    <Grid Grid.Row="11" BackgroundColor="#181818" >
+                    <Grid Grid.Row="11" IsVisible="false" BackgroundColor="#181818" >
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ContinueCommand}" />
                         </Grid.GestureRecognizers>
@@ -145,7 +145,7 @@
                         <Image Grid.Column="1" Source="arrow.png" Margin="15"></Image>
                     </Grid>
                     
-                    <BoxView Grid.Row="12" Style="{StaticResource SeperatorStyle}">
+                    <BoxView Grid.Row="12" IsVisible="false" Style="{StaticResource SeperatorStyle}">
                     </BoxView>
                     
                 </Grid>

@@ -80,6 +80,8 @@ namespace WeldingMask.PageModels
                     if (phrase.ToLower() == "go")
                     {
                         ShieldOn = true;
+
+                        ExposureTap.Execute(null);
                     }
                     else if (phrase.ToLower() == "stop")
                     {
@@ -115,6 +117,8 @@ namespace WeldingMask.PageModels
         public Command ShieldTap => new Command(() =>
         {
             ShieldOn = !ShieldOn;
+
+            ExposureTap.Execute(null);
         });
 
         public Command FocusTap => new Command(() =>
